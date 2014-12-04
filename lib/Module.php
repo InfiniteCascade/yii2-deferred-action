@@ -44,7 +44,13 @@ class Module extends \yii\base\Module
     {
         $queued = $this->pickOneQueued();
         if ($queued) {
-            $queued->run();
+            try {
+                $queued->run();
+            } catch (\Exception $e) {
+                $queued->status = 'error';
+                $queued->actionObject->result->message .= ' Runner Exception: '. $e->getMessage();
+                $queued->save();
+            }
         }
     }
 
