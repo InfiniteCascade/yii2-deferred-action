@@ -15,6 +15,7 @@ abstract class Action extends \yii\base\Component
 	protected $_oldContext;
 	public $guestExpiration = '+1 days';
 	public $userExpiration = '+1 week';
+	public $errorExpiration = '+1 days';
 
 	public function __sleep()
     {
@@ -32,6 +33,9 @@ abstract class Action extends \yii\base\Component
     {
     	if ($this->isGuestAction) {
     		return strtotime($this->guestExpiration);
+    	}
+    	if ($this->model->status === 'error') {
+    		return strtotime($this->errorExpiration);
     	}
     	return strtotime($this->userExpiration);
     }
