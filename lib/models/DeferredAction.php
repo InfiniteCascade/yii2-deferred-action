@@ -3,6 +3,7 @@
 namespace infinite\deferred\models;
 
 use Yii;
+use infinite\helpers\Date;
 
 /**
  * This is the model class for table "deferred_action".
@@ -143,8 +144,22 @@ class DeferredAction extends \infinite\db\ActiveRecord
         $p = [];
         $p['id'] = $this->primaryKey;
         $p['status'] = $this->status;
+        $p['duration'] = $this->niceDuration;
+        $p['date'] = date("F d, Y g:i:a", strtotime($this->created));
         $p['data'] = $this->actionObject->packageData();
         return $p;
+    }
+
+    public function getNiceDuration()
+    {
+        return Date::niceDuration($this->duration);
+    }
+
+    public function getDuration()
+    {
+        $startTime = isset($this->started) ? strtotime($this->started) : strtotime($this->created);
+        $endTime = isset($this->ended) ? strtotime($this->ended) : time();
+        return $endTime - $startTime;
     }
 
     public function run()
@@ -159,6 +174,7 @@ class DeferredAction extends \infinite\db\ActiveRecord
             $this->expires = date("Y-m-d G:i:s");
             $this->status = 'error';
         }
+        $this->peak_memory = memory_get_peak_usage();
         $this->ended = date("Y-m-d G:i:s");
         return $this->save();
     }

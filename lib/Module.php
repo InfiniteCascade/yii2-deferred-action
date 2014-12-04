@@ -12,7 +12,6 @@ use yii\helpers\Url;
 
 class Module extends \yii\base\Module
 {
-    public $recentlyFinished = 60;
 
     public function init()
     {
@@ -55,16 +54,15 @@ class Module extends \yii\base\Module
 
     public function navPackage()
     {
-        $package = ['_' => [], 'items' => [], 'running' => false, 'recentlyFinished' => false];
+        $package = ['_' => [], 'items' => [], 'running' => false, 'mostRecentEvent' => false];
         $package['_']['url'] = Url::to('/'.$this->id.'/nav-package');
         $items = DeferredAction::findMine()->all();
         $package['items'] = [];
-        $old = time() - $this->recentlyFinished;
         foreach ($items as $item) {
             if (!empty($item->ended)) {
-                $ended = strtotime($item->ended);
-                if ($ended > $old) {
-                    $package['recentlyFinished'] = true;
+                $modified = strtotime($item->modified);
+                if (!$package['mostRecentEvent'] || $modified > $package['mostRecentEvent']) {
+                    $package['mostRecentEvent'] = $modified;
                 }
             }
             if (in_array($item->status, ['running', 'queued'])) {

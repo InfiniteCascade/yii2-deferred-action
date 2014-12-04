@@ -2,6 +2,7 @@
 namespace infinite\deferred\components;
 
 interface ActionInterface {
+	public function getDescriptor();
 	public static function setup();
 	public function context();
 	protected function prepareContext();

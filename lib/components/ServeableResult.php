@@ -1,7 +1,10 @@
 <?php
 namespace infinite\deferred\components;
+
+use Yii;
 use yii\web\NotFoundHttpException;
 use yii\helpers\FileHelper;
+use yii\helpers\Url;
 
 abstract class ServeableResult extends Result implements ServeableResultInterface
 {
@@ -10,10 +13,19 @@ abstract class ServeableResult extends Result implements ServeableResultInterfac
 
 	public function serve()
 	{
-		if (!$this->servableFilePath) {
+		if (!$this->serveableFilePath) {
 			throw new NotFoundHttpException("Background action result file is not found.");
 		}
-		Yii::$app->response->sendFile($this->servableFilePath, $this->niceFilename, ['mimeType' => $this->mimeType]);
+		Yii::$app->response->sendFile($this->serveableFilePath, $this->niceFilename, ['mimeType' => $this->mimeType]);
+	}
+
+	public function package()
+	{
+		$package = parent::package();
+		if ($this->serveableFilePath) {
+			$package['download'] = Url::to(['/deferredAction/download', 'id' => $this->action->model->id]);
+		}
+		return $package;
 	}
 
 	public function getMimeType()

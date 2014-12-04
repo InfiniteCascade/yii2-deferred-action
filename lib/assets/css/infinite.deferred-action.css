@@ -1,0 +1,13 @@
+.deferred-action-trigger .popover {
+    max-width:500px;
+}
+
+.deferred-action-trigger .popover-content {
+	max-height: 300px;
+	overflow-y: auto;
+}
+
+.deferred-action-trigger .popover .btn,
+.deferred-action-trigger .popover .label {
+	margin-right: 3px;
+}

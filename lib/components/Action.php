@@ -5,7 +5,7 @@ use Yii;
 use infinite\deferred\models\DeferredAction;
 use yii\base\InvalidConfigException;
 
-class Action extends \yii\base\Component
+abstract class Action extends \yii\base\Component
 {
 	public $model;
 	public $configFatal = true;
@@ -120,6 +120,7 @@ class Action extends \yii\base\Component
 		if (!isset($this->_result)) {
 			$this->_result = Yii::createObject($this->resultConfig);
 		}
+		$this->_result->action = $this;
 		return $this->_result;
 	}
 
@@ -136,6 +137,8 @@ class Action extends \yii\base\Component
 	public function packageData()
 	{
 		$d = [];
+		$d['descriptor'] = $this->descriptor;
+		$d['result'] = $this->result->package();
 		return $d;
 	}
 
