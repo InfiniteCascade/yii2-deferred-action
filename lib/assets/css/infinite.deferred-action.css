@@ -1,4 +1,5 @@
 .deferred-action-trigger .popover {
+    min-width:300px;
     max-width:500px;
 }
 
@@ -10,4 +11,23 @@
 .deferred-action-trigger .popover .btn,
 .deferred-action-trigger .popover .label {
 	margin-right: 3px;
+}
+
+.deferrerd-action-log .list-group-item.row {
+    margin: 0;
+}
+.deferrerd-action-log .list-group-item .detail-value {
+    font-weight: bold;
+}
+
+.deferrerd-action-log .list-group-item .detail-icon {
+    font-size: 120%;
+}
+
+.deferrerd-action-log .preformatted {
+	white-space: pre;
+}
+
+.deferrerd-action-log  .log-data-output {
+  overflow: auto;
 }

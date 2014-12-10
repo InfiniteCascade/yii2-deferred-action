@@ -4,6 +4,7 @@ namespace infinite\deferred\models;
 
 use Yii;
 use infinite\helpers\Date;
+use infinite\helpers\StringHelper;
 
 /**
  * This is the model class for table "deferred_action".
@@ -153,6 +154,13 @@ class DeferredAction extends \infinite\db\ActiveRecord
     public function getNiceDuration()
     {
         return Date::niceDuration($this->duration);
+    }
+    public function getPeakMemory()
+    {
+        if (empty($this->peak_memory)) {
+            return '0b';
+        }
+        return StringHelper::humanFilesize($this->peak_memory);
     }
 
     public function getDuration()

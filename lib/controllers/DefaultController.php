@@ -7,6 +7,7 @@ use Yii;
 use yii\web\NotFoundHttpException;
 use infinite\helpers\Html;
 use infinite\deferred\models\DeferredAction;
+use infinite\deferred\components\LogResult;
 use infinite\deferred\components\ServeableResultInterface;
 
 class DefaultController extends \infinite\web\Controller
@@ -26,5 +27,41 @@ class DefaultController extends \infinite\web\Controller
     		throw new NotFoundHttpException("Deferred action does not have a serveable result");
     	}
     	$action->result->serve();
+    }
+
+    public function actionViewLog()
+    {
+        if (!isset($_GET['id']) || !($deferredAction = DeferredAction::findMine()->andWhere(['id' => $_GET['id']])->one())) {
+            throw new NotFoundHttpException("Deferred action not found!");
+        }
+        $action = $deferredAction->actionObject;
+        if (!($action->result instanceof LogResult)) {
+            throw new NotFoundHttpException("Deferred action does not have a serveable result");
+        }
+        $this->params['deferredAction'] = $deferredAction;
+        $this->params['action'] = $action;
+        Yii::$app->response->task = 'message';
+        Yii::$app->response->taskOptions = ['title' => $action->descriptor .' on '. date("F d, Y g:i:sa", strtotime($deferredAction->created)), 'modalClass' => 'modal-lg'];
+        Yii::$app->response->view = 'viewLog';
+    }
+
+    public function actionCancel()
+    {
+        if (!isset($_GET['id']) || !($deferredAction = DeferredAction::findMine()->andWhere(['id' => $_GET['id']])->one())) {
+            throw new NotFoundHttpException("Deferred action not found!");
+        }
+        $action = $deferredAction->actionObject;
+        if ($deferredAction->status === 'queued') {
+            if ($deferredAction->delete()) {
+                Yii::$app->response->task = 'message';
+                Yii::$app->response->content = 'Task was canceled!';
+                Yii::$app->response->taskSet = [['task' => 'deferredAction']];
+                Yii::$app->response->taskOptions = ['state' => 'success'];
+                return;
+            }
+        }
+        Yii::$app->response->task = 'message';
+        Yii::$app->response->content = 'Task could not be canceled.';
+        Yii::$app->response->taskOptions = ['state' => 'danger'];
     }
 }

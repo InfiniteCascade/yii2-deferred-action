@@ -4,9 +4,15 @@ namespace infinite\deferred\components;
 use Yii;
 use infinite\deferred\models\DeferredAction;
 use yii\base\InvalidConfigException;
+use yii\helpers\Url;
 
 abstract class Action extends \yii\base\Component
 {
+	const PRIORITY_LOW = 1;
+	const PRIORITY_MEDIUM = 2;
+	const PRIORITY_HIGH = 3;
+	const PRIORITY_CRITICAL = 4;
+
 	public $model;
 	public $configFatal = true;
 	protected $_config = [];
@@ -48,12 +54,18 @@ abstract class Action extends \yii\base\Component
     	return true;
     }
 
+    public function getPriority()
+    {
+    	return static::PRIORITY_LOW;
+    }
+
 	public static function setup($config = [])
 	{
 		$item = new static;
 		$item->config = $config;
 		$item->model = new DeferredAction;
 		$item->model->actionObject = $item;
+		$item->model->priority = $item->getPriority();
 		static::prepareModel($item->model);
 		if ($item->model->save()) {
 			return $item;
@@ -141,6 +153,7 @@ abstract class Action extends \yii\base\Component
 	public function packageData()
 	{
 		$d = [];
+		$d['cancelUrl'] = Url::to(['/deferredAction/cancel', 'id' => $this->model->id]);;
 		$d['descriptor'] = $this->descriptor;
 		$d['result'] = $this->result->package();
 		return $d;
