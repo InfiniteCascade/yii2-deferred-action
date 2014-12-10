@@ -26,7 +26,7 @@ abstract class Action extends \yii\base\Component
 	public function __sleep()
     {
         $keys = array_keys((array) $this);
-        $bad = ["model"];
+        $bad = ["\0*\0_cache", "model"];
         foreach ($keys as $k => $key) {
             if (in_array($key, $bad)) {
                 unset($keys[$k]);

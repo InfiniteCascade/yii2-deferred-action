@@ -12,6 +12,7 @@ use yii\helpers\Url;
 
 class Module extends \yii\base\Module
 {
+    protected $_active;
 
     public function init()
     {
@@ -24,15 +25,38 @@ class Module extends \yii\base\Module
         }
     }
 
+    public function daemonPostTick()
+    {
+        if (isset($this->_active)) {
+            $lastError = error_get_last();
+            $lastErrorMessage = '';
+            if (isset($lastError['file'])) {
+                $lastErrorMessage .= $lastError['file'];
+            }
+            if (isset($lastError['line'])) {
+                $lastErrorMessage .= ':'. $lastError['line'];
+            }
+            if (isset($lastError['message'])) {
+                $lastErrorMessage .= ' :'. $lastError['message'];
+            }
+            $this->_active->status = 'error';
+            $this->_active->actionObject->result->message .= ' Runner Error: '. $lastErrorMessage;
+            $this->_active->save();
+        }
+    }
+
     public function daemonTick($event)
     {
-        
         $this->handleOneQueued();
     }
 
     public function daemonPriority($event)
     {
-
+        $running = DeferredAction::find()->where(['status' => 'running'])->orderBy(['priority' => SORT_DESC, 'created' => SORT_DESC])->all();
+        foreach ($running as $action) {
+            $action->status = 'error';
+            $action->save();
+        }
     }
 
     protected function pickOneQueued()
@@ -44,13 +68,16 @@ class Module extends \yii\base\Module
     {
         $queued = $this->pickOneQueued();
         if ($queued) {
+            $this->_active = $queued;
             try {
                 $queued->run();
             } catch (\Exception $e) {
                 $queued->status = 'error';
-                $queued->actionObject->result->message .= ' Runner Exception: '. $e->getMessage();
+                $message = $e->getFile() .':'. $e->getLine().' '. $e->getMessage();
+                $queued->actionObject->result->message .= ' Runner Exception: '. $message;
                 $queued->save();
             }
+            $this->_active = null;
         }
     }
 

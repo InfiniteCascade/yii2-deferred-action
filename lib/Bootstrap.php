@@ -16,6 +16,7 @@ class Bootstrap implements BootstrapInterface
         $app->setModule('deferredAction', ['class' => Module::className()]);
         $module = $app->getModule('deferredAction');
     	Event::on(Daemon::className(), Daemon::EVENT_TICK, [$module, 'daemonTick']);
+    	Event::on(Daemon::className(), Daemon::EVENT_POST_TICK, [$module, 'daemonPostTick']);
     	Event::on(Cron::className(), Cron::EVENT_MIDNIGHT, [$module, 'cleanActions']);
     }
 }
