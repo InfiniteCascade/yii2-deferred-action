@@ -61,7 +61,6 @@ class Module extends \yii\base\Module
 
     protected function pickOneQueued()
     {
-        return DeferredAction::find()->where(['id' => '1'])->orderBy(['priority' => SORT_DESC, 'created' => SORT_DESC])->one();
         return DeferredAction::find()->where(['status' => 'queued'])->orderBy(['priority' => SORT_DESC, 'created' => SORT_DESC])->one();
     }
 
