@@ -61,6 +61,7 @@ class Module extends \yii\base\Module
 
     protected function pickOneQueued()
     {
+        return DeferredAction::find()->where(['id' => '1'])->orderBy(['priority' => SORT_DESC, 'created' => SORT_DESC])->one();
         return DeferredAction::find()->where(['status' => 'queued'])->orderBy(['priority' => SORT_DESC, 'created' => SORT_DESC])->one();
     }
 
@@ -68,7 +69,6 @@ class Module extends \yii\base\Module
     {
         $queued = $this->pickOneQueued();
         if ($queued) {
-            $this->_active = $queued;
             try {
                 $queued->run();
             } catch (\Exception $e) {
@@ -77,7 +77,6 @@ class Module extends \yii\base\Module
                 $queued->actionObject->result->message .= ' Runner Exception: '. $message;
                 $queued->save();
             }
-            $this->_active = null;
         }
     }
 
