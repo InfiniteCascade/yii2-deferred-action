@@ -16,6 +16,7 @@ abstract class ServeableResult extends Result implements ServeableResultInterfac
 		if (!$this->serveableFilePath) {
 			throw new NotFoundHttpException("Background action result file is not found.");
 		}
+		// $this->action->model->bumpExpires('+1 hour');
 		Yii::$app->response->sendFile($this->serveableFilePath, $this->niceFilename, ['mimeType' => $this->mimeType]);
 	}
 
@@ -26,6 +27,14 @@ abstract class ServeableResult extends Result implements ServeableResultInterfac
 			$package['download'] = Url::to(['/deferredAction/download', 'id' => $this->action->model->id]);
 		}
 		return $package;
+	}
+
+	public function clear()
+	{
+		if ($this->serveableFilePath) {
+			@unlink($this->serveableFilePath);
+		}
+		return true;
 	}
 
 	public function getMimeType()

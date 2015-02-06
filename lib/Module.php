@@ -81,13 +81,17 @@ class Module extends \yii\base\Module
 
     public function cleanActions($event)
     {
+        $items = DeferredAction::find()->where(['and', '`expires` < NOW()', '`status`=\'ready\''])->all();
+        foreach ($items as $item) {
+            $item->dismiss(false);
+        }
     }
 
     public function navPackage()
     {
         $package = ['_' => [], 'items' => [], 'running' => false, 'mostRecentEvent' => false];
         $package['_']['url'] = Url::to('/'.$this->id.'/nav-package');
-        $items = DeferredAction::findMine()->all();
+        $items = DeferredAction::findMine()->where(['or', '`expires` IS NULL', '`expires` > NOW()'])->all();
         $package['items'] = [];
         foreach ($items as $item) {
             if (!empty($item->ended)) {

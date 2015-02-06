@@ -26,5 +26,10 @@ class Result extends \yii\base\Component
 		$package['message'] = $this->message;
 		return $package;
 	}
+
+	public function clear()
+	{
+		return true;
+	}
 }
 ?>

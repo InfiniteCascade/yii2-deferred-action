@@ -155,6 +155,7 @@ class DeferredAction extends \infinite\db\ActiveRecord
     {
         return Date::niceDuration($this->duration);
     }
+
     public function getPeakMemory()
     {
         if (empty($this->peak_memory)) {
@@ -184,6 +185,31 @@ class DeferredAction extends \infinite\db\ActiveRecord
         }
         $this->peak_memory = memory_get_peak_usage();
         $this->ended = date("Y-m-d G:i:s");
+        return $this->save();
+    }
+
+    public function clearResult()
+    {
+        $object = $this->actionObject;
+        if (!empty($object)) {
+            return $object->clearResult();
+        }
+        return true;
+    }
+
+    public function dismiss($changeExpires = true)
+    {
+        if ($changeExpires) {
+            $this->expires = date("Y-m-d G:i:s");
+        }
+        if ($this->clearResult()) {
+            $this->status = 'cleared';
+        }
+        return $this->save();
+    }
+    public function bumpExpires($timeShift)
+    {
+        $this->expires = date("Y-m-d G:i:s", strtotime($timeShift));
         return $this->save();
     }
 }

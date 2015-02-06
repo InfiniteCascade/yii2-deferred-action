@@ -64,4 +64,23 @@ class DefaultController extends \infinite\web\Controller
         Yii::$app->response->content = 'Task could not be canceled.';
         Yii::$app->response->taskOptions = ['state' => 'danger'];
     }
+    public function actionDismiss()
+    {
+        if (!isset($_GET['id']) || !($deferredAction = DeferredAction::findMine()->andWhere(['id' => $_GET['id']])->one())) {
+            throw new NotFoundHttpException("Deferred action not found!");
+        }
+        $action = $deferredAction->actionObject;
+        if ($deferredAction->status === 'ready') {
+            if ($deferredAction->dismiss()) {
+                // Yii::$app->response->task = 'message';
+                // Yii::$app->response->content = 'Task was dismissed!';
+                Yii::$app->response->taskSet = [['task' => 'deferredAction']];
+                //Yii::$app->response->taskOptions = ['state' => 'warning'];
+                return;
+            }
+        }
+        Yii::$app->response->task = 'message';
+        Yii::$app->response->content = 'Task could not be dismissed.';
+        Yii::$app->response->taskOptions = ['state' => 'danger'];
+    }
 }

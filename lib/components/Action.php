@@ -140,6 +140,15 @@ abstract class Action extends \yii\base\Component
 		return $this->_result;
 	}
 
+	public function clearResult()
+	{
+		$result = $this->result;
+		if (!empty($result)) {
+			return $result->clear();
+		}
+		return true;
+	}
+
 	public function requiredConfigParams()
 	{
 		return [];
@@ -153,7 +162,11 @@ abstract class Action extends \yii\base\Component
 	public function packageData()
 	{
 		$d = [];
-		$d['cancelUrl'] = Url::to(['/deferredAction/cancel', 'id' => $this->model->id]);;
+		$d['cancelUrl'] = Url::to(['/deferredAction/cancel', 'id' => $this->model->id]);
+		$d['dismissUrl'] = false;
+		if ($this->model->status === 'ready') {
+			$d['dismissUrl'] = Url::to(['/deferredAction/dismiss', 'id' => $this->model->id]);
+		}
 		$d['descriptor'] = $this->descriptor;
 		$d['result'] = $this->result->package();
 		return $d;

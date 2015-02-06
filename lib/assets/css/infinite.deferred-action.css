@@ -1,3 +1,8 @@
+a.deferred-action-dismiss {
+    color: #000;
+    margin-top: -10px;
+    opacity: 1;
+}
 .deferred-action-trigger .popover {
     min-width:300px;
     max-width:500px;
