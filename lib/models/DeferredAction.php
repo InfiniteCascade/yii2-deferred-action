@@ -140,14 +140,16 @@ class DeferredAction extends \infinite\db\ActiveRecord
         return $this->_actionObject;
     }
 
-    public function package()
+    public function package($details = false)
     {
         $p = [];
         $p['id'] = $this->primaryKey;
         $p['status'] = $this->status;
         $p['duration'] = $this->niceDuration;
         $p['date'] = date("F d, Y g:i:a", strtotime($this->created));
-        $p['data'] = $this->actionObject->packageData();
+        $p['started'] = empty($this->started) ? null : date("F d, Y g:i:a", strtotime($this->started));
+        $p['ended'] = empty($this->ended) ? null : date("F d, Y g:i:a", strtotime($this->ended));
+        $p['data'] = $this->actionObject->packageData($details);
         return $p;
     }
 

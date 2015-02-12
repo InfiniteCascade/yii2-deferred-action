@@ -1,7 +1,15 @@
 a.deferred-action-dismiss {
-    color: #000;
     margin-top: -10px;
-    opacity: 1;
+    margin-right: -10px;
+    opacity: .2;
+}
+a.deferred-action-dismiss span,
+.navbar-nav a.deferred-action-dismiss span {
+    color: #000;
+}
+
+.list-group-item.row.row-fluid {
+    margin: 0;
 }
 .deferred-action-trigger .popover {
     min-width:300px;
@@ -33,6 +41,6 @@ a.deferred-action-dismiss {
 	white-space: pre;
 }
 
-.deferrerd-action-log  .log-data-output {
+.deferrerd-action-log .log-data-output {
   overflow: auto;
 }

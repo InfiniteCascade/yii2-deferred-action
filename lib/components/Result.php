@@ -19,7 +19,7 @@ class Result extends \yii\base\Component
         return $keys;
     }
 
-	public function package()
+	public function package($details = false)
 	{
 		$package = [];
 		$package['isSuccess'] = $this->isSuccess;
@@ -30,6 +30,14 @@ class Result extends \yii\base\Component
 	public function clear()
 	{
 		return true;
+	}
+
+	public function save()
+	{
+		if (empty($this->action)) {
+			return true;
+		}
+		return $this->action->save();
 	}
 }
 ?>

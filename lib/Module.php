@@ -71,10 +71,13 @@ class Module extends \yii\base\Module
             try {
                 $queued->run();
             } catch (\Exception $e) {
-                $queued->status = 'error';
-                $message = $e->getFile() .':'. $e->getLine().' '. $e->getMessage();
-                $queued->actionObject->result->message .= ' Runner Exception: '. $message;
-                $queued->save();
+                $queued = DeferredAction::find()->where(['id' => $queued->id])->one();
+                if ($queued) {
+                    $queued->status = 'error';
+                    $message = $e->getFile() .':'. $e->getLine().' '. $e->getMessage();
+                    $queued->actionObject->result->message .= ' Runner Exception: '. $message;
+                    $queued->save();
+                }
             }
         }
     }
@@ -91,7 +94,7 @@ class Module extends \yii\base\Module
     {
         $package = ['_' => [], 'items' => [], 'running' => false, 'mostRecentEvent' => false];
         $package['_']['url'] = Url::to('/'.$this->id.'/nav-package');
-        $items = DeferredAction::findMine()->where(['or', '`expires` IS NULL', '`expires` > NOW()'])->all();
+        $items = DeferredAction::findMine()->where(['and', '`status` != "cleared"', ['or', '`expires` IS NULL', '`expires` > NOW()']])->all();
         $package['items'] = [];
         foreach ($items as $item) {
             if (!empty($item->ended)) {

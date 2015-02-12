@@ -40,8 +40,12 @@ class DefaultController extends \infinite\web\Controller
         }
         $this->params['deferredAction'] = $deferredAction;
         $this->params['action'] = $action;
+        if (!empty($_GET['package'])) {
+            Yii::$app->response->data = $deferredAction->package(true);
+            return;
+        }
         Yii::$app->response->task = 'message';
-        Yii::$app->response->taskOptions = ['title' => $action->descriptor .' on '. date("F d, Y g:i:sa", strtotime($deferredAction->created)), 'modalClass' => 'modal-lg'];
+        Yii::$app->response->taskOptions = ['title' => $action->descriptor .' on '. date("F d, Y g:i:sa", strtotime($deferredAction->created)), 'modalClass' => 'modal-xl'];
         Yii::$app->response->view = 'viewLog';
     }
 
@@ -70,7 +74,7 @@ class DefaultController extends \infinite\web\Controller
             throw new NotFoundHttpException("Deferred action not found!");
         }
         $action = $deferredAction->actionObject;
-        if ($deferredAction->status === 'ready') {
+        if (in_array($deferredAction->status, ['ready', 'error'])) {
             if ($deferredAction->dismiss()) {
                 // Yii::$app->response->task = 'message';
                 // Yii::$app->response->content = 'Task was dismissed!';

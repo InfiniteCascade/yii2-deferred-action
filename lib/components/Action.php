@@ -35,6 +35,15 @@ abstract class Action extends \yii\base\Component
         return $keys;
     }
 
+	public function save()
+	{
+		if (empty($this->model)) {
+			return true;
+		}
+        $this->model->peak_memory = memory_get_peak_usage();
+		return $this->model->save();
+	}
+
     public function getExpireTime()
     {
     	if ($this->isGuestAction) {
@@ -159,16 +168,16 @@ abstract class Action extends \yii\base\Component
 		return $this->getBaseContext();;
 	}
 
-	public function packageData()
+	public function packageData($details = false)
 	{
 		$d = [];
 		$d['cancelUrl'] = Url::to(['/deferredAction/cancel', 'id' => $this->model->id]);
 		$d['dismissUrl'] = false;
-		if ($this->model->status === 'ready') {
+		if (in_array($this->model->status, ['ready', 'error'])) {
 			$d['dismissUrl'] = Url::to(['/deferredAction/dismiss', 'id' => $this->model->id]);
 		}
 		$d['descriptor'] = $this->descriptor;
-		$d['result'] = $this->result->package();
+		$d['result'] = $this->result->package($details);
 		return $d;
 	}
 
