@@ -94,7 +94,7 @@ class Module extends \yii\base\Module
     {
         $package = ['_' => [], 'items' => [], 'running' => false, 'mostRecentEvent' => false];
         $package['_']['url'] = Url::to('/'.$this->id.'/nav-package');
-        $items = DeferredAction::findMine()->where(['and', '`status` != "cleared"', ['or', '`expires` IS NULL', '`expires` > NOW()']])->all();
+        $items = DeferredAction::findMine()->andWhere(['and', '`status` != "cleared"', ['or', '`expires` IS NULL', '`expires` > NOW()']])->all();
         $package['items'] = [];
         foreach ($items as $item) {
             if (!empty($item->ended)) {
