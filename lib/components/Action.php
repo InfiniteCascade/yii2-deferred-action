@@ -15,7 +15,7 @@ abstract class Action extends \yii\base\Component
 
 	public $model;
 	public $configFatal = true;
-	protected $_config = [];
+	protected $_config;
 	protected $_context;
 	protected $_result;
 	protected $_oldContext;
@@ -42,6 +42,11 @@ abstract class Action extends \yii\base\Component
 		}
         $this->model->peak_memory = memory_get_peak_usage();
 		return $this->model->save();
+	}
+
+	public function cancel()
+	{
+		return true;
 	}
 
     public function getExpireTime()
@@ -106,12 +111,21 @@ abstract class Action extends \yii\base\Component
 
 	public function setConfig($config)
 	{
+		$checkParams = false;
+		if (!isset($this->_config)) {
+			$checkParams = true;
+		}
 		$this->_config = $config;
-		$this->checkParams($this->configFatal);
+		if ($checkParams) {
+			$this->checkParams($this->configFatal);
+		}
 	}
 
 	public function getConfig()
 	{
+		if (!isset($this->_config)) {
+			return [];
+		}
 		return $this->_config;
 	}
 
@@ -171,13 +185,22 @@ abstract class Action extends \yii\base\Component
 	public function packageData($details = false)
 	{
 		$d = [];
-		$d['cancelUrl'] = Url::to(['/deferredAction/cancel', 'id' => $this->model->id]);
-		$d['dismissUrl'] = false;
-		if (in_array($this->model->status, ['ready', 'error'])) {
-			$d['dismissUrl'] = Url::to(['/deferredAction/dismiss', 'id' => $this->model->id]);
-		}
 		$d['descriptor'] = $this->descriptor;
 		$d['result'] = $this->result->package($details);
+
+		$d['dismissUrl'] = false;
+		if (in_array($this->model->status, ['success', 'error'])) {
+			$d['dismissUrl'] = Url::to(['/deferredAction/dismiss', 'id' => $this->model->id]);
+		}
+
+		$d['actions'] = [];
+		if (in_array($this->model->status, ['queued'])) {
+			$d['actions'][] = ['label' => 'Cancel', 'url' => Url::to(['/deferredAction/cancel', 'id' => $this->model->id]), 'state' => 'warning', 'data-handler' => 'background'];
+		}
+		if (isset($d['result']['actions'])) {
+			$d['actions'] = array_merge($d['actions'], $d['result']['actions']);
+			unset($d['result']['actions']);
+		}
 		return $d;
 	}
 

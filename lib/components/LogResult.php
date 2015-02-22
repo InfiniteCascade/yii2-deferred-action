@@ -98,11 +98,12 @@ abstract class LogResult extends Result
 
     public function package($details = false)
 	{
-		$p = parent::package($details);
-		$p['viewLog'] = Url::to(['/deferredAction/view-log', 'id' => $this->action->model->id]);
-        $p['progress'] = $this->progress;
+		$package = parent::package($details);
+		$package['viewLog'] = Url::to();
+        $package['actions'][] = ['label' => 'View Log', 'url' => Url::to(['/deferredAction/view-log', 'id' => $this->action->model->id], 'data-handler' => 'background')];
+        $package['progress'] = $this->progress;
         if ($details) {
-            $p['messages'] = [];
+            $package['messages'] = [];
             $lastTime = $started = null;
             if (!empty($this->action->model->started)) {
                 $lastTime = $started = strtotime($this->action->model->started);
@@ -119,7 +120,7 @@ abstract class LogResult extends Result
                 $duration = $timestamp - $lastTime;
                 $lastTime = $timestamp;
                 $fromStart = $timestamp-$started;
-                $p['messages'][$key] = [
+                $package['messages'][$key] = [
                     'message' => $message['message'],
                     'duration' => Date::shortDuration($duration),
                     'fromStart' => Date::shortDuration($fromStart),
@@ -129,7 +130,7 @@ abstract class LogResult extends Result
                 ];
             }
         }
-		return $p;
+		return $package;
 	}
 }
 ?>

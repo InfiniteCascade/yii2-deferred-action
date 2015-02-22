@@ -24,7 +24,7 @@ abstract class ServeableResult extends Result implements ServeableResultInterfac
 	{
 		$package = parent::package();
 		if ($this->serveableFilePath) {
-			$package['download'] = Url::to(['/deferredAction/download', 'id' => $this->action->model->id]);
+			$package['actions'][] = ['label' => 'Download', 'url' => Url::to(['/deferredAction/download', 'id' => $this->action->model->id])];
 		}
 		return $package;
 	}

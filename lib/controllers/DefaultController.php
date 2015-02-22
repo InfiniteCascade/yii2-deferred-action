@@ -56,7 +56,7 @@ class DefaultController extends \infinite\web\Controller
         }
         $action = $deferredAction->actionObject;
         if ($deferredAction->status === 'queued') {
-            if ($deferredAction->delete()) {
+            if ($deferredAction->cancel()) {
                 Yii::$app->response->task = 'message';
                 Yii::$app->response->content = 'Task was canceled!';
                 Yii::$app->response->taskSet = [['task' => 'deferredAction']];

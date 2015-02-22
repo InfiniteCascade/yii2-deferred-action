@@ -209,6 +209,18 @@ class DeferredAction extends \infinite\db\ActiveRecord
         }
         return $this->save();
     }
+
+    public function cancel()
+    {
+        if ($this->status !== 'queued') {
+            return false;
+        }
+        $object = $this->actionObject;
+        if (!empty($object) && !$object->cancel()) {
+            return false;
+        }
+        return $this->delete();
+    }
     public function bumpExpires($timeShift)
     {
         $this->expires = date("Y-m-d G:i:s", strtotime($timeShift));

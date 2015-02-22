@@ -24,6 +24,7 @@ class Result extends \yii\base\Component
 		$package = [];
 		$package['isSuccess'] = $this->isSuccess;
 		$package['message'] = $this->message;
+		$package['actions'] = [];
 		return $package;
 	}
 
