@@ -84,7 +84,7 @@ class Module extends \yii\base\Module
 
     public function cleanActions($event)
     {
-        $items = DeferredAction::find()->where(['and', '`expires` < NOW()', '`status`=\'ready\''])->all();
+        $items = DeferredAction::find()->where(['and', '`expires` < NOW()', '`status`=\'success\''])->all();
         foreach ($items as $item) {
             $item->dismiss(false);
         }

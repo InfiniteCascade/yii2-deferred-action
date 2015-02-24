@@ -74,7 +74,7 @@ class DefaultController extends \infinite\web\Controller
             throw new NotFoundHttpException("Deferred action not found!");
         }
         $action = $deferredAction->actionObject;
-        if (in_array($deferredAction->status, ['ready', 'error'])) {
+        if (in_array($deferredAction->status, ['success', 'error'])) {
             if ($deferredAction->dismiss()) {
                 // Yii::$app->response->task = 'message';
                 // Yii::$app->response->content = 'Task was dismissed!';

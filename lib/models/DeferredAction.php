@@ -179,7 +179,7 @@ class DeferredAction extends \infinite\db\ActiveRecord
         $this->started = date("Y-m-d G:i:s");
         $this->save();
         if ($this->actionObject && $this->actionObject->run()) {
-            $this->status = 'ready';
+            $this->status = 'success';
             $this->expires = date("Y-m-d G:i:s", $this->actionObject->getExpireTime());
         } else {
             $this->expires = date("Y-m-d G:i:s");

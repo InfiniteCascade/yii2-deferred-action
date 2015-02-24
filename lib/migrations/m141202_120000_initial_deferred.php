@@ -15,7 +15,7 @@ class m141202_120000_initial_deferred extends \infinite\db\Migration
             'priority' => 'int(3) unsigned NOT NULL DEFAULT 1',
             'action' => 'longblob NOT NULL',
             'peak_memory' => 'integer unsigned DEFAULT NULL',
-            'status' => 'enum(\'queued\', \'starting\', \'running\', \'error\', \'ready\', \'cleared\') DEFAULT \'queued\'',
+            'status' => 'enum(\'queued\', \'starting\', \'running\', \'error\', \'success\', \'cleared\') DEFAULT \'queued\'',
             'started' => 'datetime DEFAULT NULL',
             'ended' => 'datetime DEFAULT NULL',
             'expires' => 'datetime DEFAULT NULL',
