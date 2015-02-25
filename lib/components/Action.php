@@ -6,7 +6,7 @@ use infinite\deferred\models\DeferredAction;
 use yii\base\InvalidConfigException;
 use yii\helpers\Url;
 
-abstract class Action extends \yii\base\Component
+abstract class Action extends \infinite\action\WebAction
 {
 	const PRIORITY_LOW = 1;
 	const PRIORITY_MEDIUM = 2;
@@ -15,13 +15,14 @@ abstract class Action extends \yii\base\Component
 
 	public $model;
 	public $configFatal = true;
-	protected $_config;
 	protected $_context;
 	protected $_result;
 	protected $_oldContext;
 	public $guestExpiration = '+1 days';
 	public $userExpiration = '+1 week';
 	public $errorExpiration = '+1 days';
+
+	protected $_interactions = [];
 
 	public function __sleep()
     {
@@ -109,38 +110,7 @@ abstract class Action extends \yii\base\Component
 		return $model;
 	}
 
-	public function setConfig($config)
-	{
-		$checkParams = false;
-		if (!isset($this->_config)) {
-			$checkParams = true;
-		}
-		$this->_config = $config;
-		if ($checkParams) {
-			$this->checkParams($this->configFatal);
-		}
-	}
 
-	public function getConfig()
-	{
-		if (!isset($this->_config)) {
-			return [];
-		}
-		return $this->_config;
-	}
-
-	public function checkParams($fatal = true)
-	{
-		foreach ($this->requiredConfigParams() as $param) {
-			if (!isset($this->config[$param])) {
-				if ($fatal) {
-					throw new InvalidConfigException("Config setting {$param} is required for ". get_called_class());
-				}
-				return false;
-			}
-		}
-		return true;
-	}
 
 	public function getResultConfig()
 	{
@@ -172,10 +142,6 @@ abstract class Action extends \yii\base\Component
 		return true;
 	}
 
-	public function requiredConfigParams()
-	{
-		return [];
-	}
 
 	public function context()
 	{
@@ -184,7 +150,7 @@ abstract class Action extends \yii\base\Component
 
 	public function packageData($details = false)
 	{
-		$d = [];
+		$d = parent::packageData($details);
 		$d['descriptor'] = $this->descriptor;
 		$d['result'] = $this->result->package($details);
 
