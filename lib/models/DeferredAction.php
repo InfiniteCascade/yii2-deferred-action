@@ -37,7 +37,11 @@ class DeferredAction extends \infinite\db\ActiveRecord
     public function serializeAction()
     {
         if (isset($this->_actionObject)) {
-            $this->action = serialize($this->_actionObject);
+            try {
+                $this->action = serialize($this->_actionObject);
+            } catch (\Exception $e) {
+                \d($this->_actionObject);exit;
+            }
         }
     }
     /**

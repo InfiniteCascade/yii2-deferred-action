@@ -27,7 +27,9 @@ class AssetBundle extends \infinite\web\assetBundles\AssetBundle
      * @inheritdoc
      */
     public $js = [
-        'js/infinite.deferred-action.js'
+        'js/infinite.deferred-action.js',
+        'js/infinite.deferred-action-log.js',
+        // 'js/infinite.deferred-action-interaction.js',
     ];
     
     /**

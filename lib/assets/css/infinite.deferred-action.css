@@ -8,9 +8,19 @@ a.deferred-action-dismiss span,
     color: #000;
 }
 
-.list-group-item.row.row-fluid {
+.deferred-action-canvas .list-group-item.row.row-fluid {
     margin: 0;
 }
+.navbar-nav .deferred-action-trigger > a {
+    padding-top: 12px;
+    padding-bottom: 5px;
+}
+
+.deferred-action-trigger .menu-icon {
+    font-size: 2em;
+    line-height: 1em;
+}
+
 .deferred-action-trigger .popover {
     min-width:300px;
     max-width:500px;
@@ -43,4 +53,15 @@ a.deferred-action-dismiss span,
 
 .deferrerd-action-log .log-data-output {
   overflow: auto;
+}
+.deferred-action-canvas .panel {
+    margin-top: 8px;
+    margin-bottom: 0;
+}
+.deferred-action-canvas .panel h5 {
+    font-size: 90%;
+}
+.deferred-action-canvas .panel .panel-heading {
+    height: auto;
+    padding: 5px;
 }

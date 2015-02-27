@@ -5,6 +5,7 @@ namespace infinite\deferred\controllers;
 
 use Yii;
 use yii\web\NotFoundHttpException;
+use infinite\action\Interaction;
 use infinite\helpers\Html;
 use infinite\deferred\models\DeferredAction;
 use infinite\deferred\components\LogResult;
@@ -68,6 +69,7 @@ class DefaultController extends \infinite\web\Controller
         Yii::$app->response->content = 'Task could not be canceled.';
         Yii::$app->response->taskOptions = ['state' => 'danger'];
     }
+
     public function actionDismiss()
     {
         if (!isset($_GET['id']) || !($deferredAction = DeferredAction::findMine()->andWhere(['id' => $_GET['id']])->one())) {
@@ -86,5 +88,17 @@ class DefaultController extends \infinite\web\Controller
         Yii::$app->response->task = 'message';
         Yii::$app->response->content = 'Task could not be dismissed.';
         Yii::$app->response->taskOptions = ['state' => 'danger'];
+    }
+
+
+    public function actionResolveInteraction()
+    {
+        if (!isset($_POST['id']) || !isset($_POST['value']) || !Interaction::saveResolution($_POST['id'], $_POST['value'])) {
+            Yii::$app->response->task = 'message';
+            Yii::$app->response->content = 'Resolution could not be saved';
+            Yii::$app->response->taskOptions = ['state' => 'danger'];
+            return;
+        }
+        Yii::$app->response->success = 'Success';
     }
 }
