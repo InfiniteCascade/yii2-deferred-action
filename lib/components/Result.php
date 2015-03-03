@@ -33,6 +33,11 @@ class Result extends \yii\base\Component
 		return true;
 	}
 
+	public function handleException(\Exception $e)
+	{
+		return $e;
+	}
+
 	public function save()
 	{
 		if (empty($this->action)) {

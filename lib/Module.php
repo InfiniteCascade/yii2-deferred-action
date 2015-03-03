@@ -76,6 +76,7 @@ class Module extends \yii\base\Module
                     $queued->status = 'error';
                     $message = $e->getFile() .':'. $e->getLine().' '. $e->getMessage();
                     $queued->actionObject->result->message .= ' Runner Exception: '. $message;
+                    $queued->actionObject->result->handleException($e);
                     $queued->save();
                 }
             }
