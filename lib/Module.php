@@ -52,7 +52,7 @@ class Module extends \yii\base\Module
 
     public function daemonPriority($event)
     {
-        $running = DeferredAction::find()->where(['status' => 'running'])->orderBy(['priority' => SORT_DESC, 'created' => SORT_DESC])->all();
+        $running = DeferredAction::find()->where(['status' => 'running'])->orderBy(['priority' => SORT_DESC, 'created' => SORT_ASC])->all();
         foreach ($running as $action) {
             $action->status = 'error';
             $action->save();
@@ -61,7 +61,7 @@ class Module extends \yii\base\Module
 
     protected function pickOneQueued()
     {
-        return DeferredAction::find()->where(['status' => 'queued'])->orderBy(['priority' => SORT_DESC, 'created' => SORT_DESC])->one();
+        return DeferredAction::find()->where(['status' => 'queued'])->orderBy(['priority' => SORT_DESC, 'created' => SORT_ASC])->one();
     }
 
     protected function handleOneQueued()
