@@ -26,8 +26,6 @@ abstract class LogResult extends Result
     }
 
     /**
-     * __method_addError_description__
-     * @param __param_message_type__ $message __param_message_description__
      */
     public function addMessage($message, $data = null, $messageLevel = null)
     {
