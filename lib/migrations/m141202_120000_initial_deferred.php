@@ -20,7 +20,7 @@ class m141202_120000_initial_deferred extends \infinite\db\Migration
             'ended' => 'datetime DEFAULT NULL',
             'expires' => 'datetime DEFAULT NULL',
             'created' => 'datetime DEFAULT NULL',
-            'modified' => 'datetime DEFAULT NULL'
+            'modified' => 'datetime DEFAULT NULL',
         ]);
         // $this->addPrimaryKey('dataInterfacePk', 'data_interface', 'id');
         $this->addForeignKey('deferredActionUser', 'deferred_action', 'user_id', 'user', 'id', 'CASCADE', 'CASCADE');

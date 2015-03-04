@@ -1,6 +1,7 @@
 <?php
 /**
  * @link http://www.infinitecascade.com/
+ *
  * @copyright Copyright (c) 2014 Infinite Cascade
  * @license http://www.infinitecascade.com/license/
  */
@@ -8,9 +9,10 @@
 namespace infinite\deferred\components;
 
 /**
- * InfiniteAsset [@doctodo write class description for InfiniteAsset]
+ * InfiniteAsset [@doctodo write class description for InfiniteAsset].
  *
  * @author Qiang Xue <qiang.xue@gmail.com>
+ *
  * @since 2.0
  */
 class AssetBundle extends \infinite\web\assetBundles\AssetBundle
@@ -31,7 +33,7 @@ class AssetBundle extends \infinite\web\assetBundles\AssetBundle
         'js/infinite.deferred-action-log.js',
         // 'js/infinite.deferred-action-interaction.js',
     ];
-    
+
     /**
      * @inheritdoc
      */
@@ -43,6 +45,6 @@ class AssetBundle extends \infinite\web\assetBundles\AssetBundle
         'infinite\web\assetBundles\UnderscoreAsset',
         'infinite\web\assetBundles\FontAwesomeAsset',
         'infinite\web\assetBundles\AjaxFormAsset',
-        'infinite\web\assetBundles\InfiniteAsset'
+        'infinite\web\assetBundles\InfiniteAsset',
     ];
 }

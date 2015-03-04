@@ -1,18 +1,18 @@
 <?php
 /**
  * @link http://www.infinitecascade.com/
+ *
  * @copyright Copyright (c) 2014 Infinite Cascade
  * @license http://www.infinitecascade.com/license/
  */
 
 namespace infinite\deferred\widgets;
 
-use Yii;
 use infinite\helpers\Html;
-
+use Yii;
 
 /**
- * ActiveField [@doctodo write class description for ActiveField]
+ * ActiveField [@doctodo write class description for ActiveField].
  *
  * @author Jacob Morrison <email@ofjacob.com>
  */
@@ -24,7 +24,7 @@ class NavItem extends \yii\base\Widget
         $widget = Yii::createObject($config);
         $view = $widget->getView();
         \infinite\deferred\components\AssetBundle::register($view);
-        
+
         $package = Yii::$app->getModule('deferredAction')->navPackage();
         $visible = !empty($package['items']);
         $spanHtmlOptions = ['class' => 'menu-icon fa fa-gear', 'title' => 'Background Tasks'];
@@ -37,6 +37,7 @@ class NavItem extends \yii\base\Widget
         if (!$visible) {
             Html::addCssClass($htmlOptions, 'hidden');
         }
+
         return ['label' => Html::tag('span', '', $spanHtmlOptions), 'url' => '#', 'options' => $htmlOptions, 'linkOptions' => $linkHtmlOptions];
     }
 }

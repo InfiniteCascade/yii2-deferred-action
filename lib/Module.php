@@ -1,13 +1,10 @@
 <?php
 namespace infinite\deferred;
 
+use infinite\deferred\models\DeferredAction;
 use Yii;
-use yii\base\BootstrapInterface;
 use yii\base\Application;
 use yii\base\Event;
-use infinite\base\Daemon;
-use infinite\base\Cron;
-use infinite\deferred\models\DeferredAction;
 use yii\helpers\Url;
 
 class Module extends \yii\base\Module
@@ -34,13 +31,13 @@ class Module extends \yii\base\Module
                 $lastErrorMessage .= $lastError['file'];
             }
             if (isset($lastError['line'])) {
-                $lastErrorMessage .= ':'. $lastError['line'];
+                $lastErrorMessage .= ':' . $lastError['line'];
             }
             if (isset($lastError['message'])) {
-                $lastErrorMessage .= ' :'. $lastError['message'];
+                $lastErrorMessage .= ' :' . $lastError['message'];
             }
             $this->_active->status = 'error';
-            $this->_active->actionObject->result->message .= ' Runner Error: '. $lastErrorMessage;
+            $this->_active->actionObject->result->message .= ' Runner Error: ' . $lastErrorMessage;
             $this->_active->save();
         }
     }
@@ -74,8 +71,8 @@ class Module extends \yii\base\Module
                 $queued = DeferredAction::find()->where(['id' => $queued->id])->one();
                 if ($queued) {
                     $queued->status = 'error';
-                    $message = $e->getFile() .':'. $e->getLine().' '. $e->getMessage();
-                    $queued->actionObject->result->message .= ' Runner Exception: '. $message;
+                    $message = $e->getFile() . ':' . $e->getLine() . ' ' . $e->getMessage();
+                    $queued->actionObject->result->message .= ' Runner Exception: ' . $message;
                     $queued->actionObject->result->handleException($e);
                     $queued->save();
                 }
@@ -94,8 +91,8 @@ class Module extends \yii\base\Module
     public function navPackage()
     {
         $package = ['_' => [], 'items' => [], 'running' => false, 'mostRecentEvent' => false];
-        $package['_']['refreshUrl'] = Url::to('/'.$this->id.'/nav-package');
-        $package['_']['resolveUrl'] = Url::to('/'.$this->id.'/resolve-interaction');
+        $package['_']['refreshUrl'] = Url::to('/' . $this->id . '/nav-package');
+        $package['_']['resolveUrl'] = Url::to('/' . $this->id . '/resolve-interaction');
         $items = DeferredAction::findMine()->andWhere(['and', '`status` != "cleared"', ['or', '`expires` IS NULL', '`expires` > NOW()']])->all();
         $package['items'] = [];
         foreach ($items as $item) {
@@ -110,6 +107,7 @@ class Module extends \yii\base\Module
             }
             $package['items'][$item->primaryKey] = $item->package();
         }
+
         return $package;
     }
 }

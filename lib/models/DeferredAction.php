@@ -2,9 +2,9 @@
 
 namespace infinite\deferred\models;
 
-use Yii;
 use infinite\helpers\Date;
 use infinite\helpers\StringHelper;
+use Yii;
 
 /**
  * This is the model class for table "deferred_action".
@@ -21,7 +21,6 @@ use infinite\helpers\StringHelper;
  * @property string $expires
  * @property string $created
  * @property string $modified
- *
  * @property User $user
  */
 class DeferredAction extends \infinite\db\ActiveRecord
@@ -40,7 +39,8 @@ class DeferredAction extends \infinite\db\ActiveRecord
             try {
                 $this->action = serialize($this->_actionObject);
             } catch (\Exception $e) {
-                \d($this->_actionObject);exit;
+                \d($this->_actionObject);
+                exit;
             }
         }
     }
@@ -71,7 +71,7 @@ class DeferredAction extends \infinite\db\ActiveRecord
             [['action', 'status'], 'string'],
             [['started', 'ended', 'expires', 'created', 'modified'], 'safe'],
             [['user_id'], 'string', 'max' => 36],
-            [['session_id'], 'string', 'max' => 40]
+            [['session_id'], 'string', 'max' => 40],
         ];
     }
 
@@ -127,6 +127,7 @@ class DeferredAction extends \infinite\db\ActiveRecord
         }
         $query->where($where);
         $query->orderBy(['modified' => SORT_DESC]);
+
         return $query;
     }
 
@@ -141,6 +142,7 @@ class DeferredAction extends \infinite\db\ActiveRecord
             $this->_actionObject = unserialize($this->action);
             $this->_actionObject->model = $this;
         }
+
         return $this->_actionObject;
     }
 
@@ -154,6 +156,7 @@ class DeferredAction extends \infinite\db\ActiveRecord
         $p['started'] = empty($this->started) ? null : date("F d, Y g:i:a", strtotime($this->started));
         $p['ended'] = empty($this->ended) ? null : date("F d, Y g:i:a", strtotime($this->ended));
         $p['data'] = $this->actionObject->packageData($details);
+
         return $p;
     }
 
@@ -167,6 +170,7 @@ class DeferredAction extends \infinite\db\ActiveRecord
         if (empty($this->peak_memory)) {
             return '0b';
         }
+
         return StringHelper::humanFilesize($this->peak_memory);
     }
 
@@ -174,6 +178,7 @@ class DeferredAction extends \infinite\db\ActiveRecord
     {
         $startTime = isset($this->started) ? strtotime($this->started) : strtotime($this->created);
         $endTime = isset($this->ended) ? strtotime($this->ended) : time();
+
         return $endTime - $startTime;
     }
 
@@ -191,6 +196,7 @@ class DeferredAction extends \infinite\db\ActiveRecord
         }
         $this->peak_memory = memory_get_peak_usage();
         $this->ended = date("Y-m-d G:i:s");
+
         return $this->save();
     }
 
@@ -200,6 +206,7 @@ class DeferredAction extends \infinite\db\ActiveRecord
         if (!empty($object)) {
             return $object->clearResult();
         }
+
         return true;
     }
 
@@ -211,6 +218,7 @@ class DeferredAction extends \infinite\db\ActiveRecord
         if ($this->clearResult()) {
             $this->status = 'cleared';
         }
+
         return $this->save();
     }
 
@@ -223,11 +231,13 @@ class DeferredAction extends \infinite\db\ActiveRecord
         if (!empty($object) && !$object->cancel()) {
             return false;
         }
+
         return $this->delete();
     }
     public function bumpExpires($timeShift)
     {
         $this->expires = date("Y-m-d G:i:s", strtotime($timeShift));
+
         return $this->save();
     }
 }
