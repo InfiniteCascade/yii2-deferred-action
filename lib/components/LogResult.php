@@ -98,7 +98,7 @@ abstract class LogResult extends Result
 	{
 		$package = parent::package($details);
 		$package['viewLog'] = Url::to();
-        $package['actions'][] = ['label' => 'View Log', 'url' => Url::to(['/deferredAction/view-log', 'id' => $this->action->model->id], 'data-handler' => 'background')];
+        $package['actions'][] = ['label' => 'View Log', 'url' => Url::to(['/deferredAction/view-log', 'id' => $this->action->model->id]), 'data-handler' => 'background'];
         $package['progress'] = $this->progress;
         if ($details) {
             $package['messages'] = [];
