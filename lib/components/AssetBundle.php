@@ -9,7 +9,7 @@
 namespace infinite\deferred\components;
 
 /**
- * InfiniteAsset [@doctodo write class description for InfiniteAsset].
+ * AssetBundle [[@doctodo class_description:infinite\deferred\components\AssetBundle]].
  *
  * @author Qiang Xue <qiang.xue@gmail.com>
  *

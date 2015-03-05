@@ -9,13 +9,26 @@ use infinite\deferred\models\DeferredAction;
 use Yii;
 use yii\web\NotFoundHttpException;
 
+/**
+ * DefaultController [[@doctodo class_description:infinite\deferred\controllers\DefaultController]].
+ *
+ * @author Jacob Morrison <email@ofjacob.com>
+ */
 class DefaultController extends \infinite\web\Controller
 {
+    /**
+     * [[@doctodo method_description:actionNavPackage]].
+     */
     public function actionNavPackage()
     {
         $navPackage = Yii::$app->getModule('deferredAction')->navPackage();
         Yii::$app->response->data = $navPackage;
     }
+    /**
+     * [[@doctodo method_description:actionDownload]].
+     *
+     * @throws NotFoundHttpException [[@doctodo exception_description:NotFoundHttpException]]
+     */
     public function actionDownload()
     {
         if (!isset($_GET['id']) || !($deferredAction = DeferredAction::findMine()->andWhere(['id' => $_GET['id']])->one())) {
@@ -28,6 +41,13 @@ class DefaultController extends \infinite\web\Controller
         $action->result->serve();
     }
 
+    /**
+     * [[@doctodo method_description:actionViewLog]].
+     *
+     * @throws NotFoundHttpException [[@doctodo exception_description:NotFoundHttpException]]
+     * @return [[@doctodo return_type:actionViewLog]] [[@doctodo return_description:actionViewLog]]
+     *
+     */
     public function actionViewLog()
     {
         if (!isset($_GET['id']) || !($deferredAction = DeferredAction::findMine()->andWhere(['id' => $_GET['id']])->one())) {
@@ -49,6 +69,13 @@ class DefaultController extends \infinite\web\Controller
         Yii::$app->response->view = 'viewLog';
     }
 
+    /**
+     * [[@doctodo method_description:actionCancel]].
+     *
+     * @throws NotFoundHttpException [[@doctodo exception_description:NotFoundHttpException]]
+     * @return [[@doctodo return_type:actionCancel]] [[@doctodo return_description:actionCancel]]
+     *
+     */
     public function actionCancel()
     {
         if (!isset($_GET['id']) || !($deferredAction = DeferredAction::findMine()->andWhere(['id' => $_GET['id']])->one())) {
@@ -70,6 +97,13 @@ class DefaultController extends \infinite\web\Controller
         Yii::$app->response->taskOptions = ['state' => 'danger'];
     }
 
+    /**
+     * [[@doctodo method_description:actionDismiss]].
+     *
+     * @throws NotFoundHttpException [[@doctodo exception_description:NotFoundHttpException]]
+     * @return [[@doctodo return_type:actionDismiss]] [[@doctodo return_description:actionDismiss]]
+     *
+     */
     public function actionDismiss()
     {
         if (!isset($_GET['id']) || !($deferredAction = DeferredAction::findMine()->andWhere(['id' => $_GET['id']])->one())) {
@@ -90,6 +124,11 @@ class DefaultController extends \infinite\web\Controller
         Yii::$app->response->taskOptions = ['state' => 'danger'];
     }
 
+    /**
+     * [[@doctodo method_description:actionResolveInteraction]].
+     *
+     * @return [[@doctodo return_type:actionResolveInteraction]] [[@doctodo return_description:actionResolveInteraction]]
+     */
     public function actionResolveInteraction()
     {
         if (!isset($_POST['id']) || !isset($_POST['value']) || !Interaction::saveResolution($_POST['id'], $_POST['value'])) {

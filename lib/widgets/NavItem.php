@@ -12,12 +12,15 @@ use infinite\helpers\Html;
 use Yii;
 
 /**
- * ActiveField [@doctodo write class description for ActiveField].
+ * NavItem [[@doctodo class_description:infinite\deferred\widgets\NavItem]].
  *
  * @author Jacob Morrison <email@ofjacob.com>
  */
 class NavItem extends \yii\base\Widget
 {
+    /**
+     * @inheritdoc
+     */
     public static function widget($config = [])
     {
         $config['class'] = get_called_class();

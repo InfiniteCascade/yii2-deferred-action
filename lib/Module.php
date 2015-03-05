@@ -7,10 +7,21 @@ use yii\base\Application;
 use yii\base\Event;
 use yii\helpers\Url;
 
+/**
+ * Module [[@doctodo class_description:infinite\deferred\Module]].
+ *
+ * @author Jacob Morrison <email@ofjacob.com>
+ */
 class Module extends \yii\base\Module
 {
+    /**
+     * @var [[@doctodo var_type:_active]] [[@doctodo var_description:_active]]
+     */
     protected $_active;
 
+    /**
+     * @inheritdoc
+     */
     public function init()
     {
         parent::init();
@@ -22,6 +33,9 @@ class Module extends \yii\base\Module
         }
     }
 
+    /**
+     * [[@doctodo method_description:daemonPostTick]].
+     */
     public function daemonPostTick()
     {
         if (isset($this->_active)) {
@@ -42,11 +56,17 @@ class Module extends \yii\base\Module
         }
     }
 
+    /**
+     * [[@doctodo method_description:daemonTick]].
+     */
     public function daemonTick($event)
     {
         $this->handleOneQueued();
     }
 
+    /**
+     * [[@doctodo method_description:daemonPriority]].
+     */
     public function daemonPriority($event)
     {
         $running = DeferredAction::find()->where(['status' => 'running'])->orderBy(['priority' => SORT_DESC, 'created' => SORT_ASC])->all();
@@ -56,11 +76,19 @@ class Module extends \yii\base\Module
         }
     }
 
+    /**
+     * [[@doctodo method_description:pickOneQueued]].
+     *
+     * @return [[@doctodo return_type:pickOneQueued]] [[@doctodo return_description:pickOneQueued]]
+     */
     protected function pickOneQueued()
     {
         return DeferredAction::find()->where(['status' => 'queued'])->orderBy(['priority' => SORT_DESC, 'created' => SORT_ASC])->one();
     }
 
+    /**
+     * [[@doctodo method_description:handleOneQueued]].
+     */
     protected function handleOneQueued()
     {
         $queued = $this->pickOneQueued();
@@ -80,6 +108,9 @@ class Module extends \yii\base\Module
         }
     }
 
+    /**
+     * [[@doctodo method_description:cleanActions]].
+     */
     public function cleanActions($event)
     {
         $items = DeferredAction::find()->where(['and', '`expires` < NOW()', '`status`=\'success\''])->all();
@@ -88,6 +119,11 @@ class Module extends \yii\base\Module
         }
     }
 
+    /**
+     * [[@doctodo method_description:navPackage]].
+     *
+     * @return [[@doctodo return_type:navPackage]] [[@doctodo return_description:navPackage]]
+     */
     public function navPackage()
     {
         $package = ['_' => [], 'items' => [], 'running' => false, 'mostRecentEvent' => false];

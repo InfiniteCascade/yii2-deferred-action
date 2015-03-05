@@ -1,8 +1,16 @@
 <?php
 namespace infinite\deferred\migrations;
 
+/**
+ * m141202_120000_initial_deferred [[@doctodo class_description:infinite\deferred\migrations\m141202_120000_initial_deferred]].
+ *
+ * @author Jacob Morrison <email@ofjacob.com>
+ */
 class m141202_120000_initial_deferred extends \infinite\db\Migration
 {
+    /**
+     * @inheritdoc
+     */
     public function up()
     {
         $this->db->createCommand()->checkIntegrity(false)->execute();
@@ -29,6 +37,9 @@ class m141202_120000_initial_deferred extends \infinite\db\Migration
         return true;
     }
 
+    /**
+     * @inheritdoc
+     */
     public function down()
     {
         $this->db->createCommand()->checkIntegrity(false)->execute();

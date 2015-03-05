@@ -7,7 +7,7 @@ use infinite\helpers\StringHelper;
 use Yii;
 
 /**
- * This is the model class for table "deferred_action".
+ * DeferredAction is the model class for table "deferred_action".
  *
  * @property string $id
  * @property string $user_id
@@ -22,17 +22,28 @@ use Yii;
  * @property string $created
  * @property string $modified
  * @property User $user
+ *
+ * @author Jacob Morrison <email@ofjacob.com>
  */
 class DeferredAction extends \infinite\db\ActiveRecord
 {
+    /**
+     * @var [[@doctodo var_type:_actionObject]] [[@doctodo var_description:_actionObject]]
+     */
     protected $_actionObject;
 
+    /**
+     * @inheritdoc
+     */
     public function init()
     {
         parent::init();
         $this->on(self::EVENT_BEFORE_VALIDATE, [$this, 'serializeAction']);
     }
 
+    /**
+     * [[@doctodo method_description:serializeAction]].
+     */
     public function serializeAction()
     {
         if (isset($this->_actionObject)) {
@@ -97,6 +108,8 @@ class DeferredAction extends \infinite\db\ActiveRecord
     }
 
     /**
+     * Get user.
+     *
      * @return \yii\db\ActiveQuery
      */
     public function getUser()
@@ -104,6 +117,11 @@ class DeferredAction extends \infinite\db\ActiveRecord
         return $this->hasOne(User::className(), ['id' => 'user_id']);
     }
 
+    /**
+     * [[@doctodo method_description:findMine]].
+     *
+     * @return [[@doctodo return_type:findMine]] [[@doctodo return_description:findMine]]
+     */
     public static function findMine($sessionId = null)
     {
         $query = static::find();
@@ -131,11 +149,19 @@ class DeferredAction extends \infinite\db\ActiveRecord
         return $query;
     }
 
+    /**
+     * Set action object.
+     */
     public function setActionObject($ao)
     {
         $this->_actionObject = $ao;
     }
 
+    /**
+     * Get action object.
+     *
+     * @return [[@doctodo return_type:getActionObject]] [[@doctodo return_description:getActionObject]]
+     */
     public function getActionObject()
     {
         if (!isset($this->_actionObject) && !empty($this->action)) {
@@ -146,6 +172,13 @@ class DeferredAction extends \infinite\db\ActiveRecord
         return $this->_actionObject;
     }
 
+    /**
+     * [[@doctodo method_description:package]].
+     *
+     * @param boolean $details [[@doctodo param_description:details]] [optional]
+     *
+     * @return [[@doctodo return_type:package]] [[@doctodo return_description:package]]
+     */
     public function package($details = false)
     {
         $p = [];
@@ -160,11 +193,21 @@ class DeferredAction extends \infinite\db\ActiveRecord
         return $p;
     }
 
+    /**
+     * Get nice duration.
+     *
+     * @return [[@doctodo return_type:getNiceDuration]] [[@doctodo return_description:getNiceDuration]]
+     */
     public function getNiceDuration()
     {
         return Date::niceDuration($this->duration);
     }
 
+    /**
+     * Get peak memory.
+     *
+     * @return [[@doctodo return_type:getPeakMemory]] [[@doctodo return_description:getPeakMemory]]
+     */
     public function getPeakMemory()
     {
         if (empty($this->peak_memory)) {
@@ -174,6 +217,11 @@ class DeferredAction extends \infinite\db\ActiveRecord
         return StringHelper::humanFilesize($this->peak_memory);
     }
 
+    /**
+     * Get duration.
+     *
+     * @return [[@doctodo return_type:getDuration]] [[@doctodo return_description:getDuration]]
+     */
     public function getDuration()
     {
         $startTime = isset($this->started) ? strtotime($this->started) : strtotime($this->created);
@@ -182,6 +230,11 @@ class DeferredAction extends \infinite\db\ActiveRecord
         return $endTime - $startTime;
     }
 
+    /**
+     * [[@doctodo method_description:run]].
+     *
+     * @return [[@doctodo return_type:run]] [[@doctodo return_description:run]]
+     */
     public function run()
     {
         $this->status = 'running';
@@ -200,6 +253,11 @@ class DeferredAction extends \infinite\db\ActiveRecord
         return $this->save();
     }
 
+    /**
+     * [[@doctodo method_description:clearResult]].
+     *
+     * @return [[@doctodo return_type:clearResult]] [[@doctodo return_description:clearResult]]
+     */
     public function clearResult()
     {
         $object = $this->actionObject;
@@ -210,6 +268,13 @@ class DeferredAction extends \infinite\db\ActiveRecord
         return true;
     }
 
+    /**
+     * [[@doctodo method_description:dismiss]].
+     *
+     * @param boolean $changeExpires [[@doctodo param_description:changeExpires]] [optional]
+     *
+     * @return [[@doctodo return_type:dismiss]] [[@doctodo return_description:dismiss]]
+     */
     public function dismiss($changeExpires = true)
     {
         if ($changeExpires) {
@@ -222,6 +287,11 @@ class DeferredAction extends \infinite\db\ActiveRecord
         return $this->save();
     }
 
+    /**
+     * [[@doctodo method_description:cancel]].
+     *
+     * @return [[@doctodo return_type:cancel]] [[@doctodo return_description:cancel]]
+     */
     public function cancel()
     {
         if ($this->status !== 'queued') {
@@ -234,6 +304,11 @@ class DeferredAction extends \infinite\db\ActiveRecord
 
         return $this->delete();
     }
+    /**
+     * [[@doctodo method_description:bumpExpires]].
+     *
+     * @return [[@doctodo return_type:bumpExpires]] [[@doctodo return_description:bumpExpires]]
+     */
     public function bumpExpires($timeShift)
     {
         $this->expires = date("Y-m-d G:i:s", strtotime($timeShift));

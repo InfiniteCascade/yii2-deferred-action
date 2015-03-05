@@ -5,6 +5,11 @@ use infinite\deferred\models\DeferredAction;
 use Yii;
 use yii\helpers\Url;
 
+/**
+ * Action [[@doctodo class_description:infinite\deferred\components\Action]].
+ *
+ * @author Jacob Morrison <email@ofjacob.com>
+ */
 abstract class Action extends \infinite\action\WebAction
 {
     const PRIORITY_LOW = 1;
@@ -12,17 +17,49 @@ abstract class Action extends \infinite\action\WebAction
     const PRIORITY_HIGH = 3;
     const PRIORITY_CRITICAL = 4;
 
+    /**
+     * @var [[@doctodo var_type:model]] [[@doctodo var_description:model]]
+     */
     public $model;
+    /**
+     * @var [[@doctodo var_type:configFatal]] [[@doctodo var_description:configFatal]]
+     */
     public $configFatal = true;
+    /**
+     * @var [[@doctodo var_type:_context]] [[@doctodo var_description:_context]]
+     */
     protected $_context;
+    /**
+     * @var [[@doctodo var_type:_result]] [[@doctodo var_description:_result]]
+     */
     protected $_result;
+    /**
+     * @var [[@doctodo var_type:_oldContext]] [[@doctodo var_description:_oldContext]]
+     */
     protected $_oldContext;
+    /**
+     * @var [[@doctodo var_type:guestExpiration]] [[@doctodo var_description:guestExpiration]]
+     */
     public $guestExpiration = '+1 days';
+    /**
+     * @var [[@doctodo var_type:userExpiration]] [[@doctodo var_description:userExpiration]]
+     */
     public $userExpiration = '+1 week';
+    /**
+     * @var [[@doctodo var_type:errorExpiration]] [[@doctodo var_description:errorExpiration]]
+     */
     public $errorExpiration = '+1 days';
 
+    /**
+     * @inheritdoc
+     */
     protected $_interactions = [];
 
+    /**
+     * Prepares object for serialization.
+     *
+     * @return [[@doctodo return_type:__sleep]] [[@doctodo return_description:__sleep]]
+     */
     public function __sleep()
     {
         $keys = array_keys((array) $this);
@@ -36,6 +73,9 @@ abstract class Action extends \infinite\action\WebAction
         return $keys;
     }
 
+    /**
+     * @inheritdoc
+     */
     public function save()
     {
         if (empty($this->model)) {
@@ -46,11 +86,19 @@ abstract class Action extends \infinite\action\WebAction
         return $this->model->save();
     }
 
+    /**
+     * @inheritdoc
+     */
     public function cancel()
     {
         return true;
     }
 
+    /**
+     * Get expire time.
+     *
+     * @return [[@doctodo return_type:getExpireTime]] [[@doctodo return_description:getExpireTime]]
+     */
     public function getExpireTime()
     {
         if ($this->isGuestAction) {
@@ -63,6 +111,11 @@ abstract class Action extends \infinite\action\WebAction
         return strtotime($this->userExpiration);
     }
 
+    /**
+     * Get is guest action.
+     *
+     * @return [[@doctodo return_type:getIsGuestAction]] [[@doctodo return_description:getIsGuestAction]]
+     */
     public function getIsGuestAction()
     {
         if (isset($this->model) && !empty($this->model->user_id)) {
@@ -72,11 +125,23 @@ abstract class Action extends \infinite\action\WebAction
         return true;
     }
 
+    /**
+     * Get priority.
+     *
+     * @return [[@doctodo return_type:getPriority]] [[@doctodo return_description:getPriority]]
+     */
     public function getPriority()
     {
         return static::PRIORITY_LOW;
     }
 
+    /**
+     * Set up.
+     *
+     * @param array $config [[@doctodo param_description:config]] [optional]
+     *
+     * @return [[@doctodo return_type:setup]] [[@doctodo return_description:setup]]
+     */
     public static function setup($config = [])
     {
         $item = new static();
@@ -94,6 +159,13 @@ abstract class Action extends \infinite\action\WebAction
         return false;
     }
 
+    /**
+     * [[@doctodo method_description:prepareModel]].
+     *
+     * @param infinite\deferred\models\DeferredAction $model [[@doctodo param_description:model]]
+     *
+     * @return [[@doctodo return_type:prepareModel]] [[@doctodo return_description:prepareModel]]
+     */
     public static function prepareModel(DeferredAction $model)
     {
         if (isset(Yii::$app->user) && !Yii::$app->user->isGuest) {
@@ -116,6 +188,11 @@ abstract class Action extends \infinite\action\WebAction
         return $model;
     }
 
+    /**
+     * Get result config.
+     *
+     * @return [[@doctodo return_type:getResultConfig]] [[@doctodo return_description:getResultConfig]]
+     */
     public function getResultConfig()
     {
         return [
@@ -123,11 +200,21 @@ abstract class Action extends \infinite\action\WebAction
         ];
     }
 
+    /**
+     * [[@doctodo method_description:package]].
+     *
+     * @return [[@doctodo return_type:package]] [[@doctodo return_description:package]]
+     */
     public function package()
     {
         return $this->model->package();
     }
 
+    /**
+     * Get result.
+     *
+     * @return [[@doctodo return_type:getResult]] [[@doctodo return_description:getResult]]
+     */
     public function getResult()
     {
         if (!isset($this->_result)) {
@@ -138,6 +225,11 @@ abstract class Action extends \infinite\action\WebAction
         return $this->_result;
     }
 
+    /**
+     * [[@doctodo method_description:clearResult]].
+     *
+     * @return [[@doctodo return_type:clearResult]] [[@doctodo return_description:clearResult]]
+     */
     public function clearResult()
     {
         $result = $this->result;
@@ -148,11 +240,19 @@ abstract class Action extends \infinite\action\WebAction
         return true;
     }
 
+    /**
+     * [[@doctodo method_description:context]].
+     *
+     * @return [[@doctodo return_type:context]] [[@doctodo return_description:context]]
+     */
     public function context()
     {
         return $this->getBaseContext();
     }
 
+    /**
+     * @inheritdoc
+     */
     public function packageData($details = false)
     {
         $d = parent::packageData($details);
@@ -176,12 +276,18 @@ abstract class Action extends \infinite\action\WebAction
         return $d;
     }
 
+    /**
+     * [[@doctodo method_description:prepareContext]].
+     */
     protected function prepareContext()
     {
         $this->_oldContext = $this->context;
         $this->context = $this->context();
     }
 
+    /**
+     * [[@doctodo method_description:resetContext]].
+     */
     protected function resetContext()
     {
         if (isset($this->_oldContext)) {
@@ -189,6 +295,11 @@ abstract class Action extends \infinite\action\WebAction
         }
     }
 
+    /**
+     * Set context.
+     *
+     * @return [[@doctodo return_type:setContext]] [[@doctodo return_description:setContext]]
+     */
     public function setContext($context)
     {
         if (isset($context['idenity']) && isset(Yii::$app->user)) {
@@ -198,6 +309,11 @@ abstract class Action extends \infinite\action\WebAction
         return true;
     }
 
+    /**
+     * Get context.
+     *
+     * @return [[@doctodo return_type:getContext]] [[@doctodo return_description:getContext]]
+     */
     public function getContext()
     {
         if (!isset($this->_context)) {
@@ -207,6 +323,11 @@ abstract class Action extends \infinite\action\WebAction
         return $this->_context;
     }
 
+    /**
+     * Get base context.
+     *
+     * @return [[@doctodo return_type:getBaseContext]] [[@doctodo return_description:getBaseContext]]
+     */
     protected function getBaseContext()
     {
         $context = [];
