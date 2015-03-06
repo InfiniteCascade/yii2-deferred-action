@@ -15,6 +15,8 @@ class Bootstrap implements BootstrapInterface
 {
     /**
      * [[@doctodo method_description:bootstrap]].
+     *
+     * @param [[@doctodo param_type:app]] $app [[@doctodo param_description:app]]
      */
     public function bootstrap($app)
     {

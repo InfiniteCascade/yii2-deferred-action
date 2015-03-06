@@ -58,6 +58,8 @@ class Module extends \yii\base\Module
 
     /**
      * [[@doctodo method_description:daemonTick]].
+     *
+     * @param [[@doctodo param_type:event]] $event [[@doctodo param_description:event]]
      */
     public function daemonTick($event)
     {
@@ -66,6 +68,8 @@ class Module extends \yii\base\Module
 
     /**
      * [[@doctodo method_description:daemonPriority]].
+     *
+     * @param [[@doctodo param_type:event]] $event [[@doctodo param_description:event]]
      */
     public function daemonPriority($event)
     {
@@ -110,6 +114,8 @@ class Module extends \yii\base\Module
 
     /**
      * [[@doctodo method_description:cleanActions]].
+     *
+     * @param [[@doctodo param_type:event]] $event [[@doctodo param_description:event]]
      */
     public function cleanActions($event)
     {

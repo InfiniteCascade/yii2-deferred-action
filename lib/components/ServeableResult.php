@@ -81,6 +81,8 @@ abstract class ServeableResult extends Result implements ServeableResultInterfac
     /**
      * Set mime type.
      *
+     * @param [[@doctodo param_type:mimeType]] $mimeType [[@doctodo param_description:mimeType]]
+     *
      * @return [[@doctodo return_type:setMimeType]] [[@doctodo return_description:setMimeType]]
      */
     public function setMimeType($mimeType)
@@ -106,6 +108,8 @@ abstract class ServeableResult extends Result implements ServeableResultInterfac
 
     /**
      * Set nice filename.
+     *
+     * @param [[@doctodo param_type:filename]] $filename [[@doctodo param_description:filename]]
      *
      * @return [[@doctodo return_type:setNiceFilename]] [[@doctodo return_description:setNiceFilename]]
      */

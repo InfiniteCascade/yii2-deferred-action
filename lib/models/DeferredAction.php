@@ -120,6 +120,8 @@ class DeferredAction extends \infinite\db\ActiveRecord
     /**
      * [[@doctodo method_description:findMine]].
      *
+     * @param [[@doctodo param_type:sessionId]] $sessionId [[@doctodo param_description:sessionId]] [optional]
+     *
      * @return [[@doctodo return_type:findMine]] [[@doctodo return_description:findMine]]
      */
     public static function findMine($sessionId = null)
@@ -151,6 +153,8 @@ class DeferredAction extends \infinite\db\ActiveRecord
 
     /**
      * Set action object.
+     *
+     * @param [[@doctodo param_type:ao]] $ao [[@doctodo param_description:ao]]
      */
     public function setActionObject($ao)
     {
@@ -306,6 +310,8 @@ class DeferredAction extends \infinite\db\ActiveRecord
     }
     /**
      * [[@doctodo method_description:bumpExpires]].
+     *
+     * @param [[@doctodo param_type:timeShift]] $timeShift [[@doctodo param_description:timeShift]]
      *
      * @return [[@doctodo return_type:bumpExpires]] [[@doctodo return_description:bumpExpires]]
      */
