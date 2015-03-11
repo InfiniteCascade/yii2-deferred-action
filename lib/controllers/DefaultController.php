@@ -1,20 +1,20 @@
 <?php
 
-namespace infinite\deferred\controllers;
+namespace teal\deferred\controllers;
 
-use infinite\action\Interaction;
-use infinite\deferred\components\LogResult;
-use infinite\deferred\components\ServeableResultInterface;
-use infinite\deferred\models\DeferredAction;
+use teal\action\Interaction;
+use teal\deferred\components\LogResult;
+use teal\deferred\components\ServeableResultInterface;
+use teal\deferred\models\DeferredAction;
 use Yii;
 use yii\web\NotFoundHttpException;
 
 /**
- * DefaultController [[@doctodo class_description:infinite\deferred\controllers\DefaultController]].
+ * DefaultController [[@doctodo class_description:teal\deferred\controllers\DefaultController]].
  *
  * @author Jacob Morrison <email@ofjacob.com>
  */
-class DefaultController extends \infinite\web\Controller
+class DefaultController extends \teal\web\Controller
 {
     /**
      * [[@doctodo method_description:actionNavPackage]].

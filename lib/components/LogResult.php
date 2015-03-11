@@ -1,12 +1,12 @@
 <?php
-namespace infinite\deferred\components;
+namespace teal\deferred\components;
 
-use infinite\helpers\Date;
-use infinite\helpers\StringHelper;
+use teal\helpers\Date;
+use teal\helpers\StringHelper;
 use yii\helpers\Url;
 
 /**
- * LogResult [[@doctodo class_description:infinite\deferred\components\LogResult]].
+ * LogResult [[@doctodo class_description:teal\deferred\components\LogResult]].
  *
  * @author Jacob Morrison <email@ofjacob.com>
  */

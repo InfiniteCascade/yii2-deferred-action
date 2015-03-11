@@ -1,18 +1,18 @@
 <?php
 /**
- * @link http://www.infinitecascade.com/
+ * @link http://teal.blue/
  *
- * @copyright Copyright (c) 2014 Infinite Cascade
- * @license http://www.infinitecascade.com/license/
+ * @copyright Copyright (c) 2014 Teal Software
+ * @license http://teal.blue/license/
  */
 
-namespace infinite\deferred\widgets;
+namespace teal\deferred\widgets;
 
-use infinite\helpers\Html;
+use teal\helpers\Html;
 use Yii;
 
 /**
- * NavItem [[@doctodo class_description:infinite\deferred\widgets\NavItem]].
+ * NavItem [[@doctodo class_description:teal\deferred\widgets\NavItem]].
  *
  * @author Jacob Morrison <email@ofjacob.com>
  */
@@ -26,7 +26,7 @@ class NavItem extends \yii\base\Widget
         $config['class'] = get_called_class();
         $widget = Yii::createObject($config);
         $view = $widget->getView();
-        \infinite\deferred\components\AssetBundle::register($view);
+        \teal\deferred\components\AssetBundle::register($view);
 
         $package = Yii::$app->getModule('deferredAction')->navPackage();
         $visible = !empty($package['items']);

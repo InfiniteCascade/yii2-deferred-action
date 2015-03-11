@@ -1,5 +1,5 @@
 {
-    "name": "infiniteCascade/yii2-deferred-action",
+    "name": "teal/yii2-deferred-action",
     "description": "Defer web actions for a server side engine",
     "keywords": ["yii2", "defer"],
     "type": "yii2-extension",
@@ -7,17 +7,17 @@
     "authors": [
         {
             "name": "Jacob Morrison",
-            "email": "jacob@infinitecascade.com"
+            "email": "jacob@teal.blue"
         }
     ],
     "require": {
         "yiisoft/yii2": "*",
-        "infiniteCascade/yii2-infinite-core": "*"
+        "teal/yii2-teal-lib": "*"
     },
     "autoload": {
-        "psr-4": { "infinite\\deferred\\": "lib" }
+        "psr-4": { "teal\\deferred\\": "lib" }
     },
     "extra": {
-        "bootstrap": "infinite\\deferred\\Bootstrap"
+        "bootstrap": "teal\\deferred\\Bootstrap"
     }
 }

@@ -1,14 +1,14 @@
 <?php
-namespace infinite\deferred;
+namespace teal\deferred;
 
-use infinite\deferred\models\DeferredAction;
+use teal\deferred\models\DeferredAction;
 use Yii;
 use yii\base\Application;
 use yii\base\Event;
 use yii\helpers\Url;
 
 /**
- * Module [[@doctodo class_description:infinite\deferred\Module]].
+ * Module [[@doctodo class_description:teal\deferred\Module]].
  *
  * @author Jacob Morrison <email@ofjacob.com>
  */

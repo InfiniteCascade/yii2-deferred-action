@@ -1,12 +1,12 @@
 <?php
-namespace infinite\deferred\migrations;
+namespace teal\deferred\migrations;
 
 /**
- * m141202_120000_initial_deferred [[@doctodo class_description:infinite\deferred\migrations\m141202_120000_initial_deferred]].
+ * m141202_120000_initial_deferred [[@doctodo class_description:teal\deferred\migrations\m141202_120000_initial_deferred]].
  *
  * @author Jacob Morrison <email@ofjacob.com>
  */
-class m141202_120000_initial_deferred extends \infinite\db\Migration
+class m141202_120000_initial_deferred extends \teal\db\Migration
 {
     /**
      * @inheritdoc

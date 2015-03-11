@@ -1,5 +1,5 @@
 <?php
-namespace infinite\deferred\components;
+namespace teal\deferred\components;
 
 use Yii;
 use yii\helpers\FileHelper;
@@ -7,7 +7,7 @@ use yii\helpers\Url;
 use yii\web\NotFoundHttpException;
 
 /**
- * ServeableResult [[@doctodo class_description:infinite\deferred\components\ServeableResult]].
+ * ServeableResult [[@doctodo class_description:teal\deferred\components\ServeableResult]].
  *
  * @author Jacob Morrison <email@ofjacob.com>
  */

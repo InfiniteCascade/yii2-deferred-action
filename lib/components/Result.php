@@ -1,8 +1,8 @@
 <?php
-namespace infinite\deferred\components;
+namespace teal\deferred\components;
 
 /**
- * Result [[@doctodo class_description:infinite\deferred\components\Result]].
+ * Result [[@doctodo class_description:teal\deferred\components\Result]].
  *
  * @author Jacob Morrison <email@ofjacob.com>
  */

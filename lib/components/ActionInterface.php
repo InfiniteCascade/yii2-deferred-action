@@ -1,5 +1,5 @@
 <?php
-namespace infinite\deferred\components;
+namespace teal\deferred\components;
 
 interface ActionInterface {
 	public function run();
