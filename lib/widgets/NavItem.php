@@ -1,18 +1,18 @@
 <?php
 /**
- * @link http://teal.blue/
+ * @link http://canis.io/
  *
- * @copyright Copyright (c) 2014 Teal Software
- * @license http://teal.blue/license/
+ * @copyright Copyright (c) 2015 Canis
+ * @license http://canis.io/license/
  */
 
-namespace teal\deferred\widgets;
+namespace canis\deferred\widgets;
 
-use teal\helpers\Html;
+use canis\helpers\Html;
 use Yii;
 
 /**
- * NavItem [[@doctodo class_description:teal\deferred\widgets\NavItem]].
+ * NavItem [[@doctodo class_description:canis\deferred\widgets\NavItem]].
  *
  * @author Jacob Morrison <email@ofjacob.com>
  */
@@ -26,7 +26,7 @@ class NavItem extends \yii\base\Widget
         $config['class'] = get_called_class();
         $widget = Yii::createObject($config);
         $view = $widget->getView();
-        \teal\deferred\components\AssetBundle::register($view);
+        \canis\deferred\components\AssetBundle::register($view);
 
         $package = Yii::$app->getModule('deferredAction')->navPackage();
         $visible = !empty($package['items']);

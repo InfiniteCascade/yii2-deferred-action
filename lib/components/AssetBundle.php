@@ -1,37 +1,37 @@
 <?php
 /**
- * @link http://www.tealcascade.com/
+ * @link http://canis.io/
  *
- * @copyright Copyright (c) 2014 Teal Software
- * @license http://www.tealcascade.com/license/
+ * @copyright Copyright (c) 2015 Canis
+ * @license http://canis.io/license/
  */
 
-namespace teal\deferred\components;
+namespace canis\deferred\components;
 
 /**
- * AssetBundle [[@doctodo class_description:teal\deferred\components\AssetBundle]].
+ * AssetBundle [[@doctodo class_description:canis\deferred\components\AssetBundle]].
  *
  * @author Qiang Xue <qiang.xue@gmail.com>
  *
  * @since 2.0
  */
-class AssetBundle extends \teal\web\assetBundles\AssetBundle
+class AssetBundle extends \canis\web\assetBundles\AssetBundle
 {
     /**
      * @inheritdoc
      */
-    public $sourcePath = '@teal/deferred/assets';
+    public $sourcePath = '@canis/deferred/assets';
     /**
      * @inheritdoc
      */
-    public $css = ['css/teal.deferred-action.css'];
+    public $css = ['css/canis.deferred-action.css'];
     /**
      * @inheritdoc
      */
     public $js = [
-        'js/teal.deferred-action.js',
-        'js/teal.deferred-action-log.js',
-        // 'js/teal.deferred-action-interaction.js',
+        'js/canis.deferred-action.js',
+        'js/canis.deferred-action-log.js',
+        // 'js/canis.deferred-action-interaction.js',
     ];
 
     /**
@@ -42,9 +42,9 @@ class AssetBundle extends \teal\web\assetBundles\AssetBundle
         'yii\bootstrap\BootstrapThemeAsset',
         'yii\web\JqueryAsset',
         'yii\jui\JuiAsset',
-        'teal\web\assetBundles\UnderscoreAsset',
-        'teal\web\assetBundles\FontAwesomeAsset',
-        'teal\web\assetBundles\AjaxFormAsset',
-        'teal\web\assetBundles\TealAsset',
+        'canis\web\assetBundles\UnderscoreAsset',
+        'canis\web\assetBundles\FontAwesomeAsset',
+        'canis\web\assetBundles\AjaxFormAsset',
+        'canis\web\assetBundles\CanisAsset',
     ];
 }

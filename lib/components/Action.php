@@ -1,16 +1,16 @@
 <?php
-namespace teal\deferred\components;
+namespace canis\deferred\components;
 
-use teal\deferred\models\DeferredAction;
+use canis\deferred\models\DeferredAction;
 use Yii;
 use yii\helpers\Url;
 
 /**
- * Action [[@doctodo class_description:teal\deferred\components\Action]].
+ * Action [[@doctodo class_description:canis\deferred\components\Action]].
  *
  * @author Jacob Morrison <email@ofjacob.com>
  */
-abstract class Action extends \teal\action\WebAction
+abstract class Action extends \canis\action\WebAction
 {
     const PRIORITY_LOW = 1;
     const PRIORITY_MEDIUM = 2;
@@ -162,7 +162,7 @@ abstract class Action extends \teal\action\WebAction
     /**
      * [[@doctodo method_description:prepareModel]].
      *
-     * @param teal\deferred\models\DeferredAction $model [[@doctodo param_description:model]]
+     * @param canis\deferred\models\DeferredAction $model [[@doctodo param_description:model]]
      *
      * @return [[@doctodo return_type:prepareModel]] [[@doctodo return_description:prepareModel]]
      */

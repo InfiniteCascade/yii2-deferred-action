@@ -1,8 +1,8 @@
 <?php
-namespace teal\deferred\components;
+namespace canis\deferred\components;
 
 /**
- * Result [[@doctodo class_description:teal\deferred\components\Result]].
+ * Result [[@doctodo class_description:canis\deferred\components\Result]].
  *
  * @author Jacob Morrison <email@ofjacob.com>
  */

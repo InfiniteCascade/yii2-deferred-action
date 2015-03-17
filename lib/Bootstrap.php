@@ -1,13 +1,13 @@
 <?php
-namespace teal\deferred;
+namespace canis\deferred;
 
-use teal\base\Cron;
-use teal\base\Daemon;
+use canis\base\Cron;
+use canis\base\Daemon;
 use yii\base\BootstrapInterface;
 use yii\base\Event;
 
 /**
- * Bootstrap [[@doctodo class_description:teal\deferred\Bootstrap]].
+ * Bootstrap [[@doctodo class_description:canis\deferred\Bootstrap]].
  *
  * @author Jacob Morrison <email@ofjacob.com>
  */
@@ -20,7 +20,7 @@ class Bootstrap implements BootstrapInterface
      */
     public function bootstrap($app)
     {
-        $app->registerMigrationAlias('@teal/deferred/migrations');
+        $app->registerMigrationAlias('@canis/deferred/migrations');
         $app->setModule('deferredAction', ['class' => Module::className()]);
         $module = $app->getModule('deferredAction');
         Event::on(Daemon::className(), Daemon::EVENT_TICK, [$module, 'daemonTick']);

@@ -1,5 +1,5 @@
 <?php
-namespace teal\deferred\components;
+namespace canis\deferred\components;
 
 interface ServeableResultInterface
 {

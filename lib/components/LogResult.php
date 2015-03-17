@@ -1,12 +1,12 @@
 <?php
-namespace teal\deferred\components;
+namespace canis\deferred\components;
 
-use teal\helpers\Date;
-use teal\helpers\StringHelper;
+use canis\helpers\Date;
+use canis\helpers\StringHelper;
 use yii\helpers\Url;
 
 /**
- * LogResult [[@doctodo class_description:teal\deferred\components\LogResult]].
+ * LogResult [[@doctodo class_description:canis\deferred\components\LogResult]].
  *
  * @author Jacob Morrison <email@ofjacob.com>
  */

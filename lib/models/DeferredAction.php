@@ -1,9 +1,9 @@
 <?php
 
-namespace teal\deferred\models;
+namespace canis\deferred\models;
 
-use teal\helpers\Date;
-use teal\helpers\StringHelper;
+use canis\helpers\Date;
+use canis\helpers\StringHelper;
 use Yii;
 
 /**
@@ -25,7 +25,7 @@ use Yii;
  *
  * @author Jacob Morrison <email@ofjacob.com>
  */
-class DeferredAction extends \teal\db\ActiveRecord
+class DeferredAction extends \canis\db\ActiveRecord
 {
     /**
      * @var [[@doctodo var_type:_actionObject]] [[@doctodo var_description:_actionObject]]

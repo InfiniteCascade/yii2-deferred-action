@@ -1,14 +1,14 @@
 <?php
-namespace teal\deferred;
+namespace canis\deferred;
 
-use teal\deferred\models\DeferredAction;
+use canis\deferred\models\DeferredAction;
 use Yii;
 use yii\base\Application;
 use yii\base\Event;
 use yii\helpers\Url;
 
 /**
- * Module [[@doctodo class_description:teal\deferred\Module]].
+ * Module [[@doctodo class_description:canis\deferred\Module]].
  *
  * @author Jacob Morrison <email@ofjacob.com>
  */
