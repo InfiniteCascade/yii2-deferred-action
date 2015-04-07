@@ -16,11 +16,6 @@ a.deferred-action-dismiss span,
     padding-bottom: 5px;
 }
 
-.deferred-action-trigger .menu-icon {
-    font-size: 2em;
-    line-height: 1em;
-}
-
 .deferred-action-trigger .popover {
     min-width:300px;
     max-width:500px;
