@@ -40,7 +40,7 @@ abstract class Action extends \canis\action\WebAction
     /**
      * @var [[@doctodo var_type:guestExpiration]] [[@doctodo var_description:guestExpiration]]
      */
-    public $guestExpiration = '+1 days';
+    public $guestExpiration = '+1 day';
     /**
      * @var [[@doctodo var_type:userExpiration]] [[@doctodo var_description:userExpiration]]
      */
@@ -48,7 +48,7 @@ abstract class Action extends \canis\action\WebAction
     /**
      * @var [[@doctodo var_type:errorExpiration]] [[@doctodo var_description:errorExpiration]]
      */
-    public $errorExpiration = '+1 days';
+    public $errorExpiration = '+1 day';
 
     /**
      * @inheritdoc
