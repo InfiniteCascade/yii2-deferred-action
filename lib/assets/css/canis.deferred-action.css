@@ -17,8 +17,8 @@ a.deferred-action-dismiss span,
 }
 
 .deferred-action-trigger .popover {
-    min-width:300px;
-    max-width:500px;
+    min-width:400px;
+    max-width:550px;
 }
 
 .deferred-action-trigger .popover-content {
