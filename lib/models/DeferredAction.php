@@ -78,8 +78,8 @@ class DeferredAction extends \canis\db\ActiveRecord
     {
         return [
             [['priority', 'peak_memory'], 'integer'],
-            [['action', 'session_id'], 'required'],
-            [['action', 'status'], 'string'],
+            [['action', 'session_id', 'action_signature'], 'required'],
+            [['action', 'status', 'action_signature'], 'string'],
             [['started', 'ended', 'expires', 'created', 'modified'], 'safe'],
             [['user_id'], 'string', 'max' => 36],
             [['session_id'], 'string', 'max' => 40],

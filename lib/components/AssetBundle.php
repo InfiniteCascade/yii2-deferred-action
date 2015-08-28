@@ -45,6 +45,6 @@ class AssetBundle extends \canis\web\assetBundles\AssetBundle
         'canis\web\assetBundles\UnderscoreAsset',
         'canis\web\assetBundles\FontAwesomeAsset',
         'canis\web\assetBundles\AjaxFormAsset',
-        'canis\web\assetBundles\CanisAsset',
+        'canis\web\assetBundles\CanisAssetsLibAsset',
     ];
 }
