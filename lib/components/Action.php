@@ -142,10 +142,13 @@ abstract class Action extends \canis\action\WebAction
      *
      * @return [[@doctodo return_type:setup]] [[@doctodo return_description:setup]]
      */
-    public static function setup($config = [])
+    public static function setup($config = [], $returnNoSave = false)
     {
         $item = new static();
         $item->config = $config;
+        if ($returnNoSave) {
+            return $item;
+        }
         $item->model = new DeferredAction();
         $item->model->action_signature = md5(serialize($item));
         if (!static::allowDuplicates() && DeferredAction::find()->where(['and', "status IN ('queued','starting','running')", ['action_signature' => $item->model->action_signature]])->count() !== '0') {

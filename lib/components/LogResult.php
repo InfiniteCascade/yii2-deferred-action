@@ -10,7 +10,7 @@ use yii\helpers\Url;
  *
  * @author Jacob Morrison <email@ofjacob.com>
  */
-abstract class LogResult extends Result
+class LogResult extends Result
 {
     const MESSAGE_LEVEL_INFO = '_i';
     const MESSAGE_LEVEL_WARNING = '_w';
