@@ -246,11 +246,10 @@ class DeferredAction extends \canis\db\ActiveRecord
         $this->save();
         if ($this->actionObject && $this->actionObject->run()) {
             $this->status = 'success';
-            $this->expires = date("Y-m-d G:i:s", $this->actionObject->getExpireTime());
         } else {
-            $this->expires = date("Y-m-d G:i:s");
             $this->status = 'error';
         }
+        $this->expires = date("Y-m-d G:i:s", $this->actionObject->getExpireTime());
         $this->peak_memory = memory_get_peak_usage();
         $this->ended = date("Y-m-d G:i:s");
 
