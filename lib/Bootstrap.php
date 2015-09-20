@@ -1,8 +1,8 @@
 <?php
 namespace canis\deferred;
 
-use canis\base\Cron;
-use canis\base\Daemon;
+use canis\cron\Cron;
+use canis\daemon\Daemon;
 use yii\base\BootstrapInterface;
 use yii\base\Event;
 
