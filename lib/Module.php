@@ -36,7 +36,7 @@ class Module extends \yii\base\Module
     /**
      * [[@doctodo method_description:daemonPostTick]].
      */
-    public function daemonPostTick()
+    public function daemonInsidePostTick()
     {
         if (isset($this->_active)) {
             $lastError = error_get_last();
@@ -66,12 +66,7 @@ class Module extends \yii\base\Module
         $this->handleOneQueued();
     }
 
-    /**
-     * [[@doctodo method_description:daemonPriority]].
-     *
-     * @param [[@doctodo param_type:event]] $event [[@doctodo param_description:event]]
-     */
-    public function daemonPriority($event)
+    public function daemonPostTick($event)
     {
         $running = DeferredAction::find()->where(['status' => 'running'])->orderBy(['priority' => SORT_DESC, 'created' => SORT_ASC])->all();
         foreach ($running as $action) {

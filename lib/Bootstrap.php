@@ -2,7 +2,7 @@
 namespace canis\deferred;
 
 use canis\cron\Cron;
-use canis\daemon\Daemon;
+use canis\daemon\TickDaemon;
 use yii\base\BootstrapInterface;
 use yii\base\Event;
 
@@ -23,8 +23,9 @@ class Bootstrap implements BootstrapInterface
         $app->registerMigrationAlias('@canis/deferred/migrations');
         $app->setModule('deferredAction', ['class' => Module::className()]);
         $module = $app->getModule('deferredAction');
-        Event::on(Daemon::className(), Daemon::EVENT_TICK, [$module, 'daemonTick']);
-        Event::on(Daemon::className(), Daemon::EVENT_POST_TICK, [$module, 'daemonPostTick']);
+        Event::on(TickDaemon::className(), TickDaemon::EVENT_TICK, [$module, 'daemonTick']);
+        Event::on(TickDaemon::className(), TickDaemon::EVENT_TICK, [$module, 'daemonInsidePostTick']);
+        Event::on(TickDaemon::className(), TickDaemon::EVENT_POST_TICK, [$module, 'daemonPostTick']);
         Event::on(Cron::className(), Cron::EVENT_MIDNIGHT, [$module, 'cleanActions']);
     }
 }
