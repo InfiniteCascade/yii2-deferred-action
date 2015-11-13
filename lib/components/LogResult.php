@@ -89,7 +89,6 @@ class LogResult
 
     public function afterAddMessage()
     {
-        parent::afterAddMessage();
         $this->save();
         return true;
     }
