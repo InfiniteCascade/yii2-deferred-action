@@ -87,6 +87,13 @@ class LogResult
         return false;
     }
 
+    public function afterAddMessage()
+    {
+        parent::afterAddMessage();
+        $this->save();
+        return true;
+    }
+
     /**
      * @inheritdoc
      */
