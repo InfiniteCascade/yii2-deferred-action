@@ -102,8 +102,8 @@ class LogResult
         $package['viewLog'] = Url::to();
         $package['actions'][] = ['label' => 'View Log', 'url' => Url::to(['/deferredAction/view-log', 'id' => $this->action->model->id]), 'data-handler' => 'background'];
         $package['progress'] = $this->progress;
-        if (!$details) {
-            unset($package['messages']);
+        if ($details) {
+            $package['messages'] = $this->packageMessages();
         }
         return $package;
     }
