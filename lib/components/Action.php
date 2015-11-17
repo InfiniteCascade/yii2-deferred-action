@@ -73,6 +73,8 @@ abstract class Action extends \canis\actions\WebAction
         return $keys;
     }
 
+    abstract public function run();
+    
     /**
      * @inheritdoc
      */
@@ -343,8 +345,9 @@ abstract class Action extends \canis\actions\WebAction
     {
         $context = [];
         if (isset(Yii::$app->user)) {
+            $groupClass = Yii::$app->classes['Group'];
             if (Yii::$app->user->isGuest) {
-                $guestGroup = Group::find()->where(['system' => 'guests'])->one();
+                $guestGroup = $groupClass::find()->where(['system' => 'guests'])->one();
                 $context = $guestGroup;
             } else {
                 $context = Yii::$app->user->identity;
