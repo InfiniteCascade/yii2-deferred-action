@@ -2,7 +2,7 @@
 
 namespace canis\deferred\controllers;
 
-use canis\action\Interaction;
+use canis\actions\Interaction;
 use canis\deferred\components\LogResult;
 use canis\deferred\components\ServeableResultInterface;
 use canis\deferred\models\DeferredAction;

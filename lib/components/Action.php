@@ -10,7 +10,7 @@ use yii\helpers\Url;
  *
  * @author Jacob Morrison <email@ofjacob.com>
  */
-abstract class Action extends \canis\action\WebAction
+abstract class Action extends \canis\actions\WebAction
 {
     const PRIORITY_LOW = 1;
     const PRIORITY_MEDIUM = 2;
