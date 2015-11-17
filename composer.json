@@ -11,8 +11,8 @@
         }
     ],
     "require": {
-        "yiisoft/yii2": "*",
-        "canis/yii2-canis-lib": "*"
+        "yiisoft/yii2": "2.0.*",
+        "canis/yii2-canis-lib": "1.*"
     },
     "autoload": {
         "psr-4": { "canis\\deferred\\": "lib" }
