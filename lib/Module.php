@@ -114,7 +114,7 @@ class Module extends \yii\base\Module
      */
     public function cleanActions($event)
     {
-        $items = DeferredAction::find()->where(['and', '`expires` < NOW()', '`status`=\'success\''])->all();
+        $items = DeferredAction::find()->where(['and', '`expires` < UTC_TIMESTAMP()', '`status`=\'success\''])->all();
         foreach ($items as $item) {
             $item->dismiss(false);
         }
@@ -130,7 +130,7 @@ class Module extends \yii\base\Module
         $package = ['_' => [], 'items' => [], 'running' => false, 'mostRecentEvent' => false];
         $package['_']['refreshUrl'] = Url::to('/' . $this->id . '/nav-package');
         $package['_']['resolveUrl'] = Url::to('/' . $this->id . '/resolve-interaction');
-        $items = DeferredAction::findMine()->andWhere(['and', '`status` != "cleared"', ['or', '`expires` IS NULL', '`expires` > NOW()']])->all();
+        $items = DeferredAction::findMine()->andWhere(['and', '`status` != "cleared"', ['or', '`expires` IS NULL', '`expires` > UTC_TIMESTAMP()']])->all();
         $package['items'] = [];
         foreach ($items as $item) {
             if (!empty($item->ended)) {

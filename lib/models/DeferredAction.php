@@ -242,16 +242,16 @@ class DeferredAction extends \canis\db\ActiveRecord
     public function run()
     {
         $this->status = 'running';
-        $this->started = date("Y-m-d G:i:s");
+        $this->started = gmdate("Y-m-d G:i:s");
         $this->save();
         if ($this->actionObject && $this->actionObject->run()) {
             $this->status = 'success';
         } else {
             $this->status = 'error';
         }
-        $this->expires = date("Y-m-d G:i:s", $this->actionObject->getExpireTime());
+        $this->expires = gmdate("Y-m-d G:i:s", $this->actionObject->getExpireTime());
         $this->peak_memory = memory_get_peak_usage();
-        $this->ended = date("Y-m-d G:i:s");
+        $this->ended = gmdate("Y-m-d G:i:s");
 
         return $this->save();
     }
@@ -281,7 +281,7 @@ class DeferredAction extends \canis\db\ActiveRecord
     public function dismiss($changeExpires = true)
     {
         if ($changeExpires) {
-            $this->expires = date("Y-m-d G:i:s");
+            $this->expires = gmdate("Y-m-d G:i:s");
         }
         if ($this->clearResult()) {
             $this->status = 'cleared';
@@ -316,7 +316,7 @@ class DeferredAction extends \canis\db\ActiveRecord
      */
     public function bumpExpires($timeShift)
     {
-        $this->expires = date("Y-m-d G:i:s", strtotime($timeShift));
+        $this->expires = gmdate("Y-m-d G:i:s", strtotime($timeShift));
 
         return $this->save();
     }
